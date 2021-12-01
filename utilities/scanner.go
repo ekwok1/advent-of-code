@@ -7,13 +7,13 @@ import (
 	"strconv"
 )
 
-func ScanInts(filepath string) (*os.File, []int) {
+func ScanIntsFromFile(filepath string) (*os.File, []int) {
 	file, scanner := getScanner(filepath)
 
 	var ints []int
 
 	for scanner.Scan() {
-		i, err := strconv.ParseInt(scanner.Text(), 10, 64)
+		i, err := strconv.Atoi(scanner.Text())
 		if err != nil {
 			fmt.Println("Could not parse int:", scanner.Text())
 		}

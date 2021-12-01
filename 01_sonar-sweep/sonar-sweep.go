@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	file, measurements := utilities.ScanInts(os.Args[1])
+	file, measurements := utilities.ScanIntsFromFile(os.Args[1])
 	defer file.Close()
 
 	increases := countIncreases(measurements)
