@@ -1,27 +1,38 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"math"
 	"os"
-	"strconv"
+
+	"github.com/ekwok1/aoc-2021/utilities"
 )
 
 func main() {
-	file, _ := os.Open(os.Args[1])
+	file, measurements := utilities.ScanInts(os.Args[1])
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
+	countIncreases(measurements)
+	countSlidingIncreases(measurements)
+}
 
-	var measurements []int
+func countIncreases(measurements []int) int {
+	previous := math.MaxInt
+	increases := 0
 
-	for scanner.Scan() {
-		i, _ := strconv.ParseInt(scanner.Text(), 10, 64)
-		measurements = append(measurements, int(i))
+	for _, measurement := range measurements {
+		if measurement > previous {
+			increases++
+		}
+
+		previous = measurement
 	}
 
+	fmt.Println(increases)
+	return increases
+}
+
+func countSlidingIncreases(measurements []int) int {
 	var slidingMeasurements []int
 
 	for i := 0; i < len(measurements)-2; i++ {
@@ -29,15 +40,5 @@ func main() {
 		slidingMeasurements = append(slidingMeasurements, sum)
 	}
 
-	previous := math.MaxInt
-	increases := 0
-	for _, slidingMeasurement := range slidingMeasurements {
-		if slidingMeasurement > previous {
-			increases = increases + 1
-		}
-
-		previous = int(slidingMeasurement)
-	}
-
-	fmt.Println(increases)
+	return countIncreases(slidingMeasurements)
 }
