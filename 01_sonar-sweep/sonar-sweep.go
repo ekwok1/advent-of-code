@@ -12,8 +12,11 @@ func main() {
 	file, measurements := utilities.ScanInts(os.Args[1])
 	defer file.Close()
 
-	countIncreases(measurements)
-	countSlidingIncreases(measurements)
+	increases := countIncreases(measurements)
+	slidingIncreases := countSlidingIncreases(measurements)
+
+	fmt.Println("Increases:", increases)
+	fmt.Println("Sliding increases:", slidingIncreases)
 }
 
 func countIncreases(measurements []int) int {
@@ -28,7 +31,6 @@ func countIncreases(measurements []int) int {
 		previous = measurement
 	}
 
-	fmt.Println(increases)
 	return increases
 }
 
