@@ -7,7 +7,7 @@ import (
 )
 
 func TestCountIncreases(t *testing.T) {
-	file, measurements := utilities.ScanInts("test-input.txt")
+	file, measurements := utilities.ScanIntsFromFile("test-input.txt")
 	defer file.Close()
 
 	increases := countIncreases(measurements)
@@ -17,7 +17,7 @@ func TestCountIncreases(t *testing.T) {
 }
 
 func TestCountSlidingIncreases(t *testing.T) {
-	file, measurements := utilities.ScanInts("test-input.txt")
+	file, measurements := utilities.ScanIntsFromFile("test-input.txt")
 	defer file.Close()
 
 	increases := countSlidingIncreases(measurements)

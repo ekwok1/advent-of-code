@@ -24,6 +24,20 @@ func ScanIntsFromFile(filepath string) (*os.File, []int) {
 	return file, ints
 }
 
+func ScanStringsFromFile(filepath string) (*os.File, []string) {
+	file, scanner := getScanner(filepath)
+
+	var strings []string
+
+	for scanner.Scan() {
+		s := scanner.Text()
+
+		strings = append(strings, s)
+	}
+
+	return file, strings
+}
+
 func getScanner(filepath string) (*os.File, *bufio.Scanner) {
 	file, err := os.Open(filepath)
 	if err != nil {
