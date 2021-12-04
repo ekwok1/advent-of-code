@@ -16,7 +16,7 @@ func main() {
 	bingoNumbers := strings.Split(bingoInfo[0], ",")
 	bingoInfo = bingoInfo[1:]
 
-	var bingoBoards [][][]BingoSquare
+	var bingoBoards []BingoBoard
 	var bingoBoard [][]BingoSquare
 
 	// Creating bingo boards
@@ -40,7 +40,7 @@ func main() {
 		bingoBoard = append(bingoBoard, bingoRow)
 
 		if rows == 5 {
-			bingoBoards = append(bingoBoards, bingoBoard)
+			bingoBoards = append(bingoBoards, BingoBoard{board: bingoBoard})
 			rows = 1
 			bingoBoard = nil
 			continue
@@ -50,6 +50,10 @@ func main() {
 	}
 
 	// Playing Bingo
+	// Mark a number
+	// Check if any bingos
+	// Repeat
+
 	var winningNumber int
 	var winningBoard int
 Loop:
@@ -71,7 +75,7 @@ Loop:
 	fmt.Println(bingoBoards[winningBoard])
 
 	sum := 0
-	for _, row := range bingoBoards[winningBoard] {
+	for _, row := range bingoBoards[winningBoard].board {
 		for _, square := range row {
 			if !square.checked {
 				sum += square.value
@@ -85,12 +89,13 @@ Loop:
 	fmt.Println(winningNumber * sum)
 }
 
-func markBingoBoards(bingoBoards [][][]BingoSquare, bingoNumber int) [][][]BingoSquare {
-	for i, board := range bingoBoards {
-		for j, row := range board {
+func markBingoBoards(bingoBoards []BingoBoard, bingoNumber int) []BingoBoard {
+	for _, board := range bingoBoards {
+		for j, row := range board.board {
 			for k, square := range row {
 				if square.value == bingoNumber {
-					bingoBoards[i][j][k].checked = true
+					board.board[j][k].checked = true
+					// bingoBoards[i][j][k].checked = true
 				}
 			}
 		}
@@ -99,14 +104,15 @@ func markBingoBoards(bingoBoards [][][]BingoSquare, bingoNumber int) [][][]Bingo
 	return bingoBoards
 }
 
-func checkBingo(bingoBoard [][]BingoSquare) bool {
+func checkBingo(bingoBoard BingoBoard) bool {
 	bingo := false
 
+	// Check horizontal
 	for i := 0; i < 5; i++ {
 		bingo = true
 
 		for j := 0; j < 5; j++ {
-			if !bingoBoard[i][j].checked {
+			if !bingoBoard.board[i][j].checked {
 				bingo = false
 				break
 			}
@@ -118,47 +124,54 @@ func checkBingo(bingoBoard [][]BingoSquare) bool {
 	}
 
 	if !bingo {
+		// Check vertical
 		for i := 0; i < 5; i++ {
 			bingo = true
 
 			for j := 0; j < 5; j++ {
-				if !bingoBoard[j][i].checked {
+				if !bingoBoard.board[j][i].checked {
 					bingo = false
 					break
 				}
 			}
-		}
 
-		if bingo {
-			return bingo
+			if bingo {
+				return bingo
+			}
 		}
 	}
 
-	if bingoBoard[2][2].checked {
-		for i := 0; i < 5; i++ {
-			bingo = true
+	if bingoBoard.board[2][2].checked {
+		if !bingo {
+			// Check top left diagonal
+			for i := 0; i < 5; i++ {
+				bingo = true
 
-			if !bingoBoard[i][i].checked {
-				bingo = false
-				break
+				if !bingoBoard.board[i][i].checked {
+					bingo = false
+					break
+				}
+			}
+
+			if bingo {
+				return bingo
 			}
 		}
 
-		if bingo {
-			return bingo
-		}
+		if !bingo {
+			// Check top right diagonal
+			for i := 4; i >= 0; i-- {
+				bingo = true
 
-		for i := 4; i >= 0; i-- {
-			bingo = true
-
-			if !bingoBoard[i][i].checked {
-				bingo = false
-				break
+				if !bingoBoard.board[i][i].checked {
+					bingo = false
+					break
+				}
 			}
-		}
 
-		if bingo {
-			return bingo
+			if bingo {
+				return bingo
+			}
 		}
 	}
 
@@ -168,4 +181,9 @@ func checkBingo(bingoBoard [][]BingoSquare) bool {
 type BingoSquare struct {
 	value   int
 	checked bool
+}
+
+type BingoBoard struct {
+	board [][]BingoSquare
+	bingo bool
 }
