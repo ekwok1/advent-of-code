@@ -13,39 +13,39 @@ func main() {
 	defer file.Close()
 
 	powerConsumption := calcPowerConsumption(binaries)
-	oxygenGeneratorRating := calcOxygenGeneratorRating(binaries)
-	carbonDioxideScrubberRating := calcCarbonDioxideScrubberRating(binaries)
-	lifeSupportRating := oxygenGeneratorRating * carbonDioxideScrubberRating
-
 	fmt.Println("Power Consumption:", powerConsumption)
+
+	oxygenGeneratorRating := getOxygenGeneratorRating(binaries, 0)
 	fmt.Println("Oxygen Generator Rating:", oxygenGeneratorRating)
+
+	carbonDioxideScrubberRating := getCarbonDioxideScrubberRating(binaries, 0)
 	fmt.Println("Carbon Dioxide Scrubber Rating:", carbonDioxideScrubberRating)
+
+	lifeSupportRating := oxygenGeneratorRating * carbonDioxideScrubberRating
 	fmt.Println("Life Support Rating:", lifeSupportRating)
 }
 
-// REFACTOR
-// Method for getting most common based on index?
-// Is there a way to do this in place without looping so many times?
-
 func calcPowerConsumption(binaries []string) int {
+	binaryMap := make(map[string]int)
+	for _, binary := range binaries {
+		for i, bit := range binary {
+			if bit == '0' {
+				binaryMap[fmt.Sprintf("zero%d", i)]++
+			} else {
+				binaryMap[fmt.Sprintf("one%d", i)]++
+			}
+		}
+	}
+
 	gammaBinary := ""
 	epsilonBinary := ""
 
 	binaryLength := len(binaries[0])
-
 	for i := 0; i < binaryLength; i++ {
-		ones := 0
-		zeros := 0
+		zeroes := binaryMap[fmt.Sprintf("zero%d", i)]
+		ones := binaryMap[fmt.Sprintf("one%d", i)]
 
-		for _, binary := range binaries {
-			if binary[i] == 48 {
-				zeros++
-			} else {
-				ones++
-			}
-		}
-
-		if ones > zeros {
+		if ones > zeroes {
 			gammaBinary += "1"
 			epsilonBinary += "0"
 		} else {
@@ -54,93 +54,90 @@ func calcPowerConsumption(binaries []string) int {
 		}
 	}
 
-	gamma, _ := strconv.ParseInt(gammaBinary, 2, 64)
-	epsilon, _ := strconv.ParseInt(epsilonBinary, 2, 64)
+	gamma, err := strconv.ParseInt(gammaBinary, 2, 64)
+	if err != nil {
+		fmt.Println("Cannot parse int from binary:", gammaBinary)
+	}
+
+	epsilon, err := strconv.ParseInt(epsilonBinary, 2, 64)
+	if err != nil {
+		fmt.Println("Cannot parse int from binary:", epsilonBinary)
+	}
+
 	return int(gamma * epsilon)
 }
 
-func calcOxygenGeneratorRating(binaries []string) int {
-	oxygenGeneratorRatingBinary := ""
-
-	binaryLength := len(binaries[0])
-	binariesCopy := binaries
-
-	for i := 0; i < binaryLength; i++ {
-		ones := 0
-		zeros := 0
-
-		for _, binary := range binariesCopy {
-			if binary[i] == 48 {
-				zeros++
-			} else {
-				ones++
-			}
+func getOxygenGeneratorRating(binaries []string, index int) int {
+	if len(binaries) == 1 {
+		oxygenGeneratorRating, err := strconv.ParseInt(binaries[0], 2, 64)
+		if err != nil {
+			fmt.Println("Cannot parse int from binary:", binaries[0])
 		}
-
-		temp := binariesCopy
-		binariesCopy = nil
-		if ones >= zeros {
-			for _, binary := range temp {
-				if binary[i] == 49 {
-					binariesCopy = append(binariesCopy, binary)
-				}
-			}
-		} else {
-			for _, binary := range temp {
-				if binary[i] == 48 {
-					binariesCopy = append(binariesCopy, binary)
-				}
-			}
-		}
-
-		if len(binariesCopy) == 1 {
-			oxygenGeneratorRatingBinary = binariesCopy[0]
-		}
+		return int(oxygenGeneratorRating)
 	}
 
-	oxygenGeneratorRating, _ := strconv.ParseInt(oxygenGeneratorRatingBinary, 2, 64)
-	return int(oxygenGeneratorRating)
+	mostCommonBit := getMostCommonBit(&binaries, index)
+	binaries = getRelevantBinaries(binaries, index, mostCommonBit)
+	index++
+
+	return getOxygenGeneratorRating(binaries, index)
 }
 
-func calcCarbonDioxideScrubberRating(binaries []string) int {
-	carbonDioxideScrubberRatingBinary := ""
-
-	binaryLength := len(binaries[0])
-	binariesCopy := binaries
-
-	for i := 0; i < binaryLength; i++ {
-		ones := 0
-		zeros := 0
-
-		for _, binary := range binariesCopy {
-			if binary[i] == 48 {
-				zeros++
-			} else {
-				ones++
-			}
+func getCarbonDioxideScrubberRating(binaries []string, index int) int {
+	if len(binaries) == 1 {
+		carbonDioxideScrubberRating, err := strconv.ParseInt(binaries[0], 2, 64)
+		if err != nil {
+			fmt.Println("Cannot parse int from binary:", binaries[0])
 		}
+		return int(carbonDioxideScrubberRating)
+	}
 
-		temp := binariesCopy
-		binariesCopy = nil
-		if ones < zeros {
-			for _, binary := range temp {
-				if binary[i] == 49 {
-					binariesCopy = append(binariesCopy, binary)
-				}
-			}
+	leastCommonBit := getLeastCommonBit(&binaries, index)
+	binaries = getRelevantBinaries(binaries, index, leastCommonBit)
+	index++
+
+	return getCarbonDioxideScrubberRating(binaries, index)
+}
+
+func getRelevantBinaries(binaries []string, index int, bit byte) (ret []string) {
+	for _, binary := range binaries {
+		if binary[index] == bit {
+			ret = append(ret, binary)
+		}
+	}
+	return
+}
+
+func getMostCommonBit(binaries *[]string, index int) byte {
+	bitMap := generateBitMap(binaries, index)
+
+	if bitMap['1'] >= bitMap['0'] {
+		return byte('1')
+	} else {
+		return byte('0')
+	}
+}
+
+func getLeastCommonBit(binaries *[]string, index int) byte {
+	bitMap := generateBitMap(binaries, index)
+
+	if bitMap['1'] < bitMap['0'] {
+		return byte('1')
+	} else {
+		return byte('0')
+	}
+}
+
+func generateBitMap(binaries *[]string, index int) map[rune]int {
+	bitMap := make(map[rune]int)
+
+	for _, binary := range *binaries {
+		if binary[index] == '1' {
+			bitMap['1']++
 		} else {
-			for _, binary := range temp {
-				if binary[i] == 48 {
-					binariesCopy = append(binariesCopy, binary)
-				}
-			}
-		}
-
-		if len(binariesCopy) == 1 {
-			carbonDioxideScrubberRatingBinary = binariesCopy[0]
+			bitMap['0']++
 		}
 	}
 
-	carbonDioxideScrubberRating, _ := strconv.ParseInt(carbonDioxideScrubberRatingBinary, 2, 64)
-	return int(carbonDioxideScrubberRating)
+	return bitMap
 }
