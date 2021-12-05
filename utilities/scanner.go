@@ -15,7 +15,7 @@ func ScanIntsFromFile(filepath string) (*os.File, []int) {
 	for scanner.Scan() {
 		i, err := strconv.Atoi(scanner.Text())
 		if err != nil {
-			fmt.Println("Could not parse int:", scanner.Text())
+			fmt.Println("Could not parse int from string:", scanner.Text())
 		}
 
 		ints = append(ints, int(i))
