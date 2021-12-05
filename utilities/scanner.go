@@ -30,7 +30,11 @@ func ScanStringsFromFile(filepath string) (*os.File, []string) {
 	var strings []string
 
 	for scanner.Scan() {
-		strings = append(strings, scanner.Text())
+		text := scanner.Text()
+		if text != "" {
+			strings = append(strings, text)
+		}
+
 	}
 
 	return file, strings
