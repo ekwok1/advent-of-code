@@ -10,21 +10,26 @@ import (
 )
 
 func main() {
-	file, fish := utilities.ScanStringsFromFile(os.Args[1])
+	file, timers := utilities.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
-	school := make([]int, 9)
-	initialTimers := strings.Split(fish[0], ",")
-
-	for _, initialTime := range initialTimers {
-		initialTime, _ := strconv.Atoi(initialTime)
-		school[initialTime]++
-	}
-
+	school := setupInitialState(timers[0])
 	simulateDays(&school, 256)
 	total := utilities.CountTotal(&school)
 
 	fmt.Println("Total Lanternfish:", total)
+}
+
+func setupInitialState(timers string) (school []int) {
+	school = make([]int, 9)
+	initialState := strings.Split(timers, ",")
+
+	for _, time := range initialState {
+		time, _ := strconv.Atoi(time)
+		school[time]++
+	}
+
+	return
 }
 
 func simulateDays(school *[]int, days int) {
