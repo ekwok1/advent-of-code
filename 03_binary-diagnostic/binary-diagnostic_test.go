@@ -12,7 +12,7 @@ func TestCalcPowerConsumption(t *testing.T) {
 
 	powerConsumption := calcPowerConsumption(binaries)
 	if powerConsumption != 198 {
-		t.Errorf("countIncreases(measurements) = %d; want 198", powerConsumption)
+		t.Errorf("calcPowerConsumption(binaries) = %d; want 198", powerConsumption)
 	}
 }
 
@@ -22,7 +22,7 @@ func TestGetOxygenGeneratorRating(t *testing.T) {
 
 	oxygenGeneratorRating := getOxygenGeneratorRating(binaries, 0)
 	if oxygenGeneratorRating != 23 {
-		t.Errorf("countIncreases(measurements) = %d; want 23", oxygenGeneratorRating)
+		t.Errorf("getOxygenGeneratorRating(binaries, 0) = %d; want 23", oxygenGeneratorRating)
 	}
 }
 
@@ -32,6 +32,6 @@ func TestGetCarbonDioxideScrubberRating(t *testing.T) {
 
 	carbonDioxideScrubberRating := getCarbonDioxideScrubberRating(binaries, 0)
 	if carbonDioxideScrubberRating != 10 {
-		t.Errorf("countIncreases(measurements) = %d; want 10", carbonDioxideScrubberRating)
+		t.Errorf("getCarbonDioxideScrubberRating(binaries, 0) = %d; want 10", carbonDioxideScrubberRating)
 	}
 }

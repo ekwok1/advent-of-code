@@ -9,20 +9,25 @@ import (
 	"github.com/ekwok1/aoc-2021/utilities"
 )
 
+// OPTOMIZATIONS
+// Only check for bingos after size of grid
+// Only check for bingos of boards that don't have bingo yet
+// Mark bingo function can be optomized with a break
+// Is it possible to create a boardmap from square value to position to reduce looping for finds?
+
 func main() {
 	file, bingoInfo := utilities.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
-	// Setting up the bingo boards
+	// Setting Up
 	allBingoBoardInfo := bingoInfo[1:]
 	bingoBoards := createBingoBoards(&allBingoBoardInfo, 5)
-
 	numbers := strings.Split(bingoInfo[0], ",")
 
 	// Winner
 	winningBoard, winningNumber := getWinningBoardAndNumber(&numbers, &bingoBoards)
 	score := calculateScore(&winningBoard, winningNumber)
-	fmt.Println("Final Score:", score)
+	fmt.Println("Winning Score:", score)
 
 	// Last
 	lastBoard, lastNumber := getLastBoardAndNumber(&numbers, &bingoBoards)

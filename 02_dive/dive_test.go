@@ -12,7 +12,7 @@ func TestDive(t *testing.T) {
 
 	product := dive(commands)
 	if product != 150 {
-		t.Errorf("countIncreases(measurements) = %d; want 150", product)
+		t.Errorf("dive(commands) = %d; want 150", product)
 	}
 }
 
@@ -22,6 +22,6 @@ func TestAimedDive(t *testing.T) {
 
 	product := aimedDive(commands)
 	if product != 900 {
-		t.Errorf("countIncreases(measurements) = %d; want 900", product)
+		t.Errorf("aimedDive(commands) = %d; want 900", product)
 	}
 }

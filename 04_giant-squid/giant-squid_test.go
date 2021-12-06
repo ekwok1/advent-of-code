@@ -20,7 +20,7 @@ func TestCalculateScoreOfWinningBoardAndNumber(t *testing.T) {
 	score := calculateScore(&winningBoard, winningNumber)
 
 	if score != 4512 {
-		t.Errorf("countIncreases(measurements) = %d; want 4512", score)
+		t.Errorf("calculateScore(&winningBoard, winningNumber) = %d; want 4512", score)
 	}
 }
 
@@ -37,6 +37,6 @@ func TestCalculateScoreOfLastBoardAndNumber(t *testing.T) {
 	score := calculateScore(&lastBoard, lastNumber)
 
 	if score != 1924 {
-		t.Errorf("countIncreases(measurements) = %d; want 1924", score)
+		t.Errorf("calculateScore(&lastBoard, lastNumber) = %d; want 1924", score)
 	}
 }
