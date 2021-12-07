@@ -3,29 +3,25 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 
 	"github.com/ekwok1/aoc-2021/utilities"
 )
 
 func main() {
-	file, timers := utilities.ScanStringsFromFile(os.Args[1])
+	file, initialTimes := utilities.ScanIntsFromDelimitedString(os.Args[1], ",")
 	defer file.Close()
 
-	school := setupInitialState(timers[0])
+	school := setupInitialState(initialTimes)
 	simulateDays(&school, 256)
 	total := utilities.CountTotal(&school)
 
 	fmt.Println("Total Lanternfish:", total)
 }
 
-func setupInitialState(timers string) (school []int) {
+func setupInitialState(initialTimes []int) (school []int) {
 	school = make([]int, 9)
-	initialState := strings.Split(timers, ",")
 
-	for _, time := range initialState {
-		time, _ := strconv.Atoi(time)
+	for _, time := range initialTimes {
 		school[time]++
 	}
 

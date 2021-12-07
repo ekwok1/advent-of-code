@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func ScanIntsFromFile(filepath string) (*os.File, []int) {
@@ -24,6 +25,30 @@ func ScanIntsFromFile(filepath string) (*os.File, []int) {
 	return file, ints
 }
 
+func ScanIntsFromDelimitedString(filepath string, delimiter string) (*os.File, []int) {
+	file, scanner := getScanner(filepath)
+
+	var ints []int
+	var stringifiedInts []string
+
+	for scanner.Scan() {
+		delimitedString := scanner.Text()
+		stringifiedInts = strings.Split(delimitedString, delimiter)
+	}
+
+	for _, stringifiedInt := range stringifiedInts {
+		fmt.Println(stringifiedInt)
+		i, err := strconv.Atoi(stringifiedInt)
+		if err != nil {
+			fmt.Println("Could not parse int from string:", stringifiedInt)
+		}
+
+		ints = append(ints, i)
+	}
+
+	return file, ints
+}
+
 func ScanStringsFromFile(filepath string) (*os.File, []string) {
 	file, scanner := getScanner(filepath)
 
@@ -34,7 +59,6 @@ func ScanStringsFromFile(filepath string) (*os.File, []string) {
 		if text != "" {
 			strings = append(strings, text)
 		}
-
 	}
 
 	return file, strings
