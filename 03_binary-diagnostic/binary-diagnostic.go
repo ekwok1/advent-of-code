@@ -99,10 +99,10 @@ func getCarbonDioxideScrubberRating(binaries []string, index int) int {
 	return getCarbonDioxideScrubberRating(binaries, index)
 }
 
-func getRelevantBinaries(binaries []string, index int, bit byte) (ret []string) {
+func getRelevantBinaries(binaries []string, index int, bit byte) (relevantBinaries []string) {
 	for _, binary := range binaries {
 		if binary[index] == bit {
-			ret = append(ret, binary)
+			relevantBinaries = append(relevantBinaries, binary)
 		}
 	}
 	return

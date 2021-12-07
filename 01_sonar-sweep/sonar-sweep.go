@@ -19,9 +19,8 @@ func main() {
 	fmt.Println("Sliding increases:", slidingIncreases)
 }
 
-func countIncreases(measurements []int) int {
+func countIncreases(measurements []int) (increases int) {
 	previous := math.MaxInt
-	increases := 0
 
 	for _, measurement := range measurements {
 		if measurement > previous {
@@ -31,7 +30,7 @@ func countIncreases(measurements []int) int {
 		previous = measurement
 	}
 
-	return increases
+	return
 }
 
 func countSlidingIncreases(measurements []int) int {

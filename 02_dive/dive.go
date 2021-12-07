@@ -25,20 +25,15 @@ func dive(commands []string) int {
 	vertical := 0
 
 	for _, command := range commands {
-		commandParts := strings.Fields(command)
+		direction, magnitude := parseMagnitude(command)
 
-		i, err := strconv.Atoi(commandParts[1])
-		if err != nil {
-			fmt.Println("Cannot convert to int:", commandParts[1])
-		}
-
-		switch commandParts[0] {
+		switch direction {
 		case "forward":
-			horizontal += i
+			horizontal += magnitude
 		case "down":
-			vertical += i
+			vertical += magnitude
 		case "up":
-			vertical -= i
+			vertical -= magnitude
 		}
 	}
 
@@ -51,23 +46,31 @@ func aimedDive(commands []string) int {
 	vertical := 0
 
 	for _, command := range commands {
-		commandParts := strings.Fields(command)
+		direction, magnitude := parseMagnitude(command)
 
-		i, err := strconv.Atoi(commandParts[1])
-		if err != nil {
-			fmt.Println("Cannot convert to int:", commandParts[1])
-		}
-
-		switch commandParts[0] {
+		switch direction {
 		case "forward":
-			horizontal += i
-			vertical += aim * i
+			horizontal += magnitude
+			vertical += aim * magnitude
 		case "down":
-			aim += i
+			aim += magnitude
 		case "up":
-			aim -= i
+			aim -= magnitude
 		}
 	}
 
 	return horizontal * vertical
+}
+
+func parseMagnitude(command string) (string, int) {
+	commandParts := strings.Fields(command)
+
+	direction := commandParts[0]
+
+	magnitude, err := strconv.Atoi(commandParts[1])
+	if err != nil {
+		fmt.Println("Could not parse int from string:", commandParts[1])
+	}
+
+	return direction, magnitude
 }

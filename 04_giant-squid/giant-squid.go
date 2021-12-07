@@ -35,10 +35,7 @@ func main() {
 	fmt.Println("Last Score:", lastScore)
 }
 
-func getWinningBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (BingoBoard, int) {
-	var winningBoard BingoBoard
-	var winningNumber int
-
+func getWinningBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (winningBoard BingoBoard, winningNumber int) {
 Loop:
 	for _, number := range *bingoNumbers {
 		bingoNumber, err := strconv.Atoi(number)
@@ -57,12 +54,10 @@ Loop:
 		}
 	}
 
-	return winningBoard, winningNumber
+	return
 }
 
-func getLastBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (BingoBoard, int) {
-	var lastBoard BingoBoard
-	var lastNumber int
+func getLastBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (lastBoard BingoBoard, lastNumber int) {
 	totalBoards := len(*bingoBoards)
 	bingos := 0
 
@@ -89,7 +84,7 @@ Loop:
 		}
 	}
 
-	return lastBoard, lastNumber
+	return
 }
 
 func markBingoBoards(bingoBoards *[]BingoBoard, bingoNumber int) {
@@ -104,7 +99,7 @@ func markBingoBoards(bingoBoards *[]BingoBoard, bingoNumber int) {
 	}
 }
 
-func createBingoBoards(allBingoRows *[]string, size int) (ret []BingoBoard) {
+func createBingoBoards(allBingoRows *[]string, size int) (bingoBoards []BingoBoard) {
 	rows := 1
 	var bingoBoard [][]BingoSpace
 
@@ -123,7 +118,7 @@ func createBingoBoards(allBingoRows *[]string, size int) (ret []BingoBoard) {
 		bingoBoard = append(bingoBoard, bingoRow)
 
 		if rows == size {
-			ret = append(ret, BingoBoard{board: bingoBoard})
+			bingoBoards = append(bingoBoards, BingoBoard{board: bingoBoard})
 			rows = 1
 			bingoBoard = nil
 			continue
@@ -210,15 +205,15 @@ func checkBingo(bingoBoard *BingoBoard, size int) bool {
 	return false
 }
 
-func calculateScore(bingoBoard *BingoBoard, winningNumber int) (ret int) {
+func calculateScore(bingoBoard *BingoBoard, winningNumber int) (score int) {
 	for _, row := range bingoBoard.board {
 		for _, square := range row {
 			if !square.selected {
-				ret += square.value
+				score += square.value
 			}
 		}
 	}
-	return ret * winningNumber
+	return score * winningNumber
 }
 
 type BingoSpace struct {
