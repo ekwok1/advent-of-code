@@ -37,7 +37,6 @@ func ScanIntsFromDelimitedString(filepath string, delimiter string) (*os.File, [
 	}
 
 	for _, stringifiedInt := range stringifiedInts {
-		fmt.Println(stringifiedInt)
 		i, err := strconv.Atoi(stringifiedInt)
 		if err != nil {
 			fmt.Println("Could not parse int from string:", stringifiedInt)
