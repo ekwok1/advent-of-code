@@ -16,16 +16,17 @@ func main() {
 	count := countTrivialPatterns(&patternData)
 	fmt.Println("Count of 1, 4, 7, 8:", count)
 
-	// OPTOMIZE
-	// If none of the output values have length of 5 or 6, then we don't need to deduce
-	total := 0
-	for _, patternDataRow := range patternData {
-		// Deduce segment patterns
-		signalPatterns := make(map[int]string)
-		signalBuckets := make([][]string, 8)
+	total := calculateTotalOutput(&patternData)
+	fmt.Println("Total:", total)
+}
 
+func calculateTotalOutput(patternData *[]string) (total int) {
+	for _, patternDataRow := range *patternData {
 		fields := strings.Split(patternDataRow, "|")
 		signals := strings.Fields(fields[0])
+
+		signalPatterns := make(map[int]string)
+		signalBuckets := make([][]string, 8)
 
 		for _, signal := range signals {
 			signalBuckets[len(signal)] = append(signalBuckets[len(signal)], signal)
@@ -94,7 +95,20 @@ func main() {
 		total += number
 	}
 
-	fmt.Println("Total:", total)
+	return
+}
+
+func countTrivialPatterns(patternData *[]string) (count int) {
+	for _, patternDataRow := range *patternData {
+		outputs := strings.Fields(strings.Split(patternDataRow, "|")[1])
+		for _, output := range outputs {
+			outputLength := len(output)
+			if isOne(outputLength) || isFour(outputLength) || isSeven(outputLength) || isEight(outputLength) {
+				count++
+			}
+		}
+	}
+	return
 }
 
 func hasAllSegments(pattern string, testPattern string) bool {
@@ -113,19 +127,6 @@ func hasAllSegments(pattern string, testPattern string) bool {
 	}
 
 	return hasAll
-}
-
-func countTrivialPatterns(patternData *[]string) (count int) {
-	for _, patternDataRow := range *patternData {
-		outputs := strings.Fields(strings.Split(patternDataRow, "|")[1])
-		for _, output := range outputs {
-			outputLength := len(output)
-			if isOne(outputLength) || isFour(outputLength) || isSeven(outputLength) || isEight(outputLength) {
-				count++
-			}
-		}
-	}
-	return
 }
 
 func isZero(output string, patternMap *map[int]string) bool {
