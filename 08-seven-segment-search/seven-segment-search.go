@@ -22,12 +22,11 @@ func main() {
 
 func calculateTotalOutput(patternData *[]string) (total int) {
 	for _, patternDataRow := range *patternData {
-		fields := strings.Split(patternDataRow, "|")
-		signals := strings.Fields(fields[0])
-
 		signalPatterns := make(map[int]string)
 		signalBuckets := make([][]string, 8)
 
+		fields := strings.Split(patternDataRow, "|")
+		signals := strings.Fields(fields[0])
 		for _, signal := range signals {
 			signalBuckets[len(signal)] = append(signalBuckets[len(signal)], signal)
 		}
@@ -60,31 +59,26 @@ func calculateTotalOutput(patternData *[]string) (total int) {
 		stringifiedNumber := ""
 		outputs := strings.Fields(fields[1])
 		for _, output := range outputs {
-			outputLength := len(output)
-			if isOne(outputLength) {
+			if isOne(output) {
 				stringifiedNumber += "1"
-			} else if isFour(outputLength) {
+			} else if isFour(output) {
 				stringifiedNumber += "4"
-			} else if isSeven(outputLength) {
+			} else if isSeven(output) {
 				stringifiedNumber += "7"
-			} else if isEight(outputLength) {
+			} else if isEight(output) {
 				stringifiedNumber += "8"
-			} else if outputLength == 6 {
-				if isZero(output, &signalPatterns) {
-					stringifiedNumber += "0"
-				} else if isSix(output, &signalPatterns) {
-					stringifiedNumber += "6"
-				} else if isNine(output, &signalPatterns) {
-					stringifiedNumber += "9"
-				}
-			} else if outputLength == 5 {
-				if isTwo(output, &signalPatterns) {
-					stringifiedNumber += "2"
-				} else if isThree(output, &signalPatterns) {
-					stringifiedNumber += "3"
-				} else if isFive(output, &signalPatterns) {
-					stringifiedNumber += "5"
-				}
+			} else if isZero(output, &signalPatterns) {
+				stringifiedNumber += "0"
+			} else if isSix(output, &signalPatterns) {
+				stringifiedNumber += "6"
+			} else if isNine(output, &signalPatterns) {
+				stringifiedNumber += "9"
+			} else if isTwo(output, &signalPatterns) {
+				stringifiedNumber += "2"
+			} else if isThree(output, &signalPatterns) {
+				stringifiedNumber += "3"
+			} else if isFive(output, &signalPatterns) {
+				stringifiedNumber += "5"
 			}
 		}
 
@@ -102,8 +96,7 @@ func countTrivialPatterns(patternData *[]string) (count int) {
 	for _, patternDataRow := range *patternData {
 		outputs := strings.Fields(strings.Split(patternDataRow, "|")[1])
 		for _, output := range outputs {
-			outputLength := len(output)
-			if isOne(outputLength) || isFour(outputLength) || isSeven(outputLength) || isEight(outputLength) {
+			if isOne(output) || isFour(output) || isSeven(output) || isEight(output) {
 				count++
 			}
 		}
@@ -134,8 +127,8 @@ func isZero(output string, patternMap *map[int]string) bool {
 	return len(output) == 6 && hasAllSegments(zeroPattern, output)
 }
 
-func isOne(length int) bool {
-	return length == 2
+func isOne(output string) bool {
+	return len(output) == 2
 }
 
 func isTwo(output string, patternMap *map[int]string) bool {
@@ -148,8 +141,8 @@ func isThree(output string, patternMap *map[int]string) bool {
 	return len(output) == 5 && hasAllSegments(threePattern, output)
 }
 
-func isFour(length int) bool {
-	return length == 4
+func isFour(output string) bool {
+	return len(output) == 4
 }
 
 func isFive(output string, patternMap *map[int]string) bool {
@@ -162,12 +155,12 @@ func isSix(output string, patternMap *map[int]string) bool {
 	return len(output) == 6 && hasAllSegments(sixPattern, output)
 }
 
-func isSeven(length int) bool {
-	return length == 3
+func isSeven(output string) bool {
+	return len(output) == 3
 }
 
-func isEight(length int) bool {
-	return length == 7
+func isEight(output string) bool {
+	return len(output) == 7
 }
 
 func isNine(output string, patternMap *map[int]string) bool {
