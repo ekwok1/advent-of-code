@@ -7,6 +7,15 @@ func CountTotal(slice *[]int) (total int) {
 	return
 }
 
+func CreateBoolGrid(row int, col int) (grid [][]bool) {
+	for i := 0; i < row; i++ {
+		gridRow := make([]bool, col)
+		grid = append(grid, gridRow)
+	}
+
+	return
+}
+
 func CreateIntGrid(size int) (ret [][]int) {
 	for i := 0; i < size; i++ {
 		gridRow := make([]int, size)

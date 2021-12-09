@@ -20,16 +20,14 @@ func main() {
 	lowPointRisk := calculateLowPointRisk(&heightmap)
 	fmt.Println("Risk:", lowPointRisk)
 
-	basinSizes := getBasinSizes(&heightmap)
-
-	product := largestBasinProduct(&basinSizes, 3)
+	product := largestBasinProduct(&heightmap, 3)
 	fmt.Println("Largest Basin Product:", product)
 }
 
-func largestBasinProduct(basinSizes *[]int, howMany int) int {
-	sort.Ints(*basinSizes)
-	length := len(*basinSizes)
-	largestSizes := (*basinSizes)[length-howMany:]
+func largestBasinProduct(heightmap *[][]Location, howMany int) int {
+	basinSizes := getBasinSizes(heightmap)
+	length := len(basinSizes)
+	largestSizes := (basinSizes)[length-howMany:]
 
 	product := 1
 	for _, size := range largestSizes {
@@ -55,6 +53,7 @@ func getBasinSizes(heightmap *[][]Location) (sizes []int) {
 		}
 	}
 
+	sort.Ints(sizes)
 	return
 }
 
