@@ -34,81 +34,38 @@ func calculateLowPointRisk(heightmap *[][]Location) (risk int) {
 }
 
 func analyzeHeightmap(heightmap *[][]Location) {
-	for y := 0; y < len(*heightmap); y++ {
-		for x := 0; x < len((*heightmap)[y]); x++ {
+	directions := 4
+	rowNumbers := [4]int{-1, 0, 0, 1}
+	columnNumbers := [4]int{0, 1, -1, 0}
+
+	for row := 0; row < len(*heightmap); row++ {
+		for col := 0; col < len((*heightmap)[row]); col++ {
 			isLowPoint := true
-			if x == 0 && y == 0 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x+1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height {
-					isLowPoint = false
-				}
 
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if x == len((*heightmap)[y])-1 && y == 0 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x-1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height {
-					isLowPoint = false
-				}
+			for i := 0; i < directions; i++ {
+				testRow := row + rowNumbers[i]
+				testCol := col + columnNumbers[i]
 
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if y == 0 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x-1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y][x+1].height {
-					isLowPoint = false
-				}
+				if isSafe(heightmap, testRow, testCol) {
+					location := (*heightmap)[row][col]
+					adjacentLocation := (*heightmap)[testRow][testCol]
+					isLowPoint = location.height < adjacentLocation.height
 
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if x == 0 && y == len((*heightmap))-1 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y-1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y][x+1].height {
-					isLowPoint = false
+					if !isLowPoint {
+						break
+					}
 				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if x == len((*heightmap)[y])-1 && y == len((*heightmap))-1 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y-1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y][x-1].height {
-					isLowPoint = false
-				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if y == len((*heightmap))-1 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x-1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y-1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y][x+1].height {
-					isLowPoint = false
-				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if x == 0 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x+1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y-1][x].height {
-					isLowPoint = false
-				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else if x == len((*heightmap)[y])-1 {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x-1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y-1][x].height {
-					isLowPoint = false
-				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
-			} else {
-				if (*heightmap)[y][x].height >= (*heightmap)[y][x-1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y][x+1].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y+1][x].height ||
-					(*heightmap)[y][x].height >= (*heightmap)[y-1][x].height {
-					isLowPoint = false
-				}
-
-				(*heightmap)[y][x].isLowPoint = isLowPoint
 			}
+
+			(*heightmap)[row][col].isLowPoint = isLowPoint
 		}
 	}
+}
+
+func isSafe(heightmap *[][]Location, row int, column int) bool {
+	totalRows := len(*heightmap)
+	totalColumns := len((*heightmap)[0])
+	return row >= 0 && column >= 0 && row < totalRows && column < totalColumns
 }
 
 func initializeHeightmap(heightData *[]string) (heightmap [][]Location) {
