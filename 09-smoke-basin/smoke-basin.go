@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -18,12 +19,72 @@ func main() {
 
 	lowPointRisk := calculateLowPointRisk(&heightmap)
 	fmt.Println("Risk:", lowPointRisk)
+
+	basinSizes := getBasinSizes(&heightmap)
+
+	product := largestBasinProduct(&basinSizes, 3)
+	fmt.Println("Largest Basin Product:", product)
+}
+
+func largestBasinProduct(basinSizes *[]int, howMany int) int {
+	sort.Ints(*basinSizes)
+	length := len(*basinSizes)
+	largestSizes := (*basinSizes)[length-howMany:]
+
+	product := 1
+	for _, size := range largestSizes {
+		product *= size
+	}
+
+	return product
+}
+
+func getBasinSizes(heightmap *[][]Location) (sizes []int) {
+	rows := len((*heightmap))
+	cols := len((*heightmap)[0])
+
+	for row := 0; row < rows; row++ {
+		for col := 0; col < cols; col++ {
+			location := (*heightmap)[row][col]
+			if location.height != 9 && !location.visited {
+				size := 1
+				basinDFS(heightmap, row, col, &size)
+
+				sizes = append(sizes, size)
+			}
+		}
+	}
+
+	return
+}
+
+func basinDFS(heightmap *[][]Location, row int, col int, size *int) {
+	rows := [4]int{-1, 0, 0, 1}
+	cols := [4]int{0, -1, 1, 0}
+
+	(*heightmap)[row][col].visited = true
+
+	for i := 0; i < 4; i++ {
+		if isDFSSafe(heightmap, row+rows[i], col+cols[i]) {
+			(*size)++
+			basinDFS(heightmap, row+rows[i], col+cols[i], size)
+		}
+	}
+}
+
+func isDFSSafe(heightmap *[][]Location, row int, col int) bool {
+	return isSafe(heightmap, row, col) &&
+		(*heightmap)[row][col].height != 9 &&
+		!(*heightmap)[row][col].visited
 }
 
 func calculateLowPointRisk(heightmap *[][]Location) (risk int) {
-	for y := 0; y < len(*heightmap); y++ {
-		for x := 0; x < len((*heightmap)[y]); x++ {
-			location := (*heightmap)[y][x]
+	totalRows := len(*heightmap)
+	totalColumns := len((*heightmap)[0])
+
+	for row := 0; row < totalRows; row++ {
+		for col := 0; col < totalColumns; col++ {
+			location := (*heightmap)[row][col]
 			if location.isLowPoint {
 				risk += location.height + 1
 			}
