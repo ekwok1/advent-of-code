@@ -7,10 +7,10 @@ import (
 )
 
 func TestSimulate18Days(t *testing.T) {
-	file, timers := utilities.ScanStringsFromFile("test-input.txt")
+	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
-	school := setupInitialState(timers[0])
+	school := setupInitialState(initialTimes)
 	simulateDays(&school, 18)
 	total := utilities.CountTotal(&school)
 
@@ -20,10 +20,10 @@ func TestSimulate18Days(t *testing.T) {
 }
 
 func TestSimulate80Days(t *testing.T) {
-	file, timers := utilities.ScanStringsFromFile("test-input.txt")
+	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
-	school := setupInitialState(timers[0])
+	school := setupInitialState(initialTimes)
 	simulateDays(&school, 80)
 	total := utilities.CountTotal(&school)
 
@@ -33,10 +33,10 @@ func TestSimulate80Days(t *testing.T) {
 }
 
 func TestSimulate256Days(t *testing.T) {
-	file, timers := utilities.ScanStringsFromFile("test-input.txt")
+	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
-	school := setupInitialState(timers[0])
+	school := setupInitialState(initialTimes)
 	simulateDays(&school, 256)
 	total := utilities.CountTotal(&school)
 
