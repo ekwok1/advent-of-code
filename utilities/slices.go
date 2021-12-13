@@ -1,5 +1,7 @@
 package utilities
 
+import "strings"
+
 func CountTotal(slice *[]int) (total int) {
 	for _, position := range *slice {
 		total += position
@@ -23,4 +25,14 @@ func CreateIntGrid(size int) (ret [][]int) {
 	}
 
 	return
+}
+
+func IndexOf(substr string, data *[]string) int {
+	for i, e := range *data {
+		if strings.Contains(e, substr) {
+			return i
+		}
+	}
+
+	return -1
 }
