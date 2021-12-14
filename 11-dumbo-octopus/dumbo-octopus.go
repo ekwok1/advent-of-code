@@ -14,9 +14,11 @@ func main() {
 	defer file.Close()
 
 	octopusGrid := initialOctopusEnergyGrid(&initialEnergyGrid)
+	flashes := simulateDays(100, &octopusGrid)
+	fmt.Println("Flashes after 100 steps:", flashes)
 
-	flashed := simulateDays(1000, &octopusGrid)
-	fmt.Println("Flashed:", flashed)
+	octopusGrid = initialOctopusEnergyGrid(&initialEnergyGrid)
+	simulateDays(1000, &octopusGrid)
 }
 
 func simulateDays(days int, octopusGrid *[][]Octopus) (flashes int) {
