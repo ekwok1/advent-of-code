@@ -57,7 +57,7 @@ func getBasinSizes(heightmap *[][]Location) (sizes []int) {
 	return
 }
 
-func basinDFS(heightmap *[][]Location, row int, col int, size *int) {
+func basinDFS(heightmap *[][]Location, row, col int, size *int) {
 	rows := [4]int{-1, 0, 0, 1}
 	cols := [4]int{0, -1, 1, 0}
 
@@ -71,7 +71,7 @@ func basinDFS(heightmap *[][]Location, row int, col int, size *int) {
 	}
 }
 
-func isDFSSafe(heightmap *[][]Location, row int, col int) bool {
+func isDFSSafe(heightmap *[][]Location, row, col int) bool {
 	return isSafe(heightmap, row, col) &&
 		(*heightmap)[row][col].height != 9 &&
 		!(*heightmap)[row][col].visited
@@ -122,7 +122,7 @@ func analyzeHeightmap(heightmap *[][]Location) {
 	}
 }
 
-func isSafe(heightmap *[][]Location, row int, column int) bool {
+func isSafe(heightmap *[][]Location, row, column int) bool {
 	totalRows := len(*heightmap)
 	totalColumns := len((*heightmap)[0])
 	return row >= 0 && column >= 0 && row < totalRows && column < totalColumns
@@ -134,10 +134,7 @@ func initializeHeightmap(heightData *[]string) (heightmap [][]Location) {
 
 		heights := strings.Split(heightDataRow, "")
 		for _, height := range heights {
-			height, err := strconv.Atoi(height)
-			if err != nil {
-				fmt.Println("Cannot parse int from string:", height)
-			}
+			height, _ := strconv.Atoi(height)
 			locations = append(locations, Location{height: height})
 		}
 

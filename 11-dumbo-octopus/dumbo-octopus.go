@@ -32,9 +32,11 @@ Loop:
 		for row := 0; row < rows; row++ {
 			for col := 0; col < cols; col++ {
 				newEnergyLevel := (*octopusGrid)[row][col].energy + 1
+
 				if newEnergyLevel > 9 {
 					queue = append(queue, Location{row: row, col: col})
 				}
+
 				(*octopusGrid)[row][col].energy = newEnergyLevel
 			}
 		}
@@ -49,9 +51,11 @@ Loop:
 
 				if isSafe(octopusGrid, newRow, newCol) {
 					newEnergyLevel := (*octopusGrid)[newRow][newCol].energy + 1
+
 					if newEnergyLevel > 9 {
 						queue = append(queue, Location{row: newRow, col: newCol})
 					}
+
 					(*octopusGrid)[newRow][newCol].energy = newEnergyLevel
 				}
 			}
@@ -90,11 +94,7 @@ func initialOctopusEnergyGrid(initialEnergyGrid *[]string) (grid [][]Octopus) {
 
 		var ocotopusRow []Octopus
 		for _, initialEnergy := range initialEnergyRow {
-			energy, err := strconv.Atoi(initialEnergy)
-			if err != nil {
-				fmt.Println("Cannot parse int from string:", initialEnergy)
-			}
-
+			energy, _ := strconv.Atoi(initialEnergy)
 			ocotopusRow = append(ocotopusRow, Octopus{energy: energy, flashed: make(map[int]bool)})
 		}
 
