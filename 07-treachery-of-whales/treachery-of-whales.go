@@ -37,20 +37,30 @@ func calcMinimumFuel(min int, max int, positions *[]int, calculator func(*[]int,
 
 func calcBasicFuel(positions *[]int, position int) (fuel int) {
 	for _, p := range *positions {
-		fuel += int(math.Abs(float64(p) - float64(position)))
+		fuel += int(math.Abs(float64(p - position)))
 	}
+
 	return
 }
 
-// TODO
-// Optomize using map for calculating fuel for a distance
 func calcExpensiveFuel(positions *[]int, position int) (fuel int) {
+	fuelMap := make(map[int]int)
+
 	for _, p := range *positions {
-		distance := int(math.Abs(float64(p) - float64(position)))
-		for i := 1; i <= distance; i++ {
-			fuel += i
+		distance := int(math.Abs(float64(p - position)))
+
+		if val, ok := fuelMap[distance]; ok {
+			fuel += val
+		} else {
+			var fuelNeeded int
+			for i := 1; i <= distance; i++ {
+				fuelNeeded += i
+			}
+			fuel += fuelNeeded
+			fuelMap[distance] = fuelNeeded
 		}
 	}
+
 	return
 }
 
@@ -62,5 +72,6 @@ func getPositionRange(positions *[]int) (min int, max int) {
 			max = position
 		}
 	}
+
 	return
 }
