@@ -14,9 +14,9 @@ func main() {
 	defer file.Close()
 
 	product := dive(commands)
-	aimedProduct := aimedDive(commands)
-
 	fmt.Println("Commands Product:", product)
+
+	aimedProduct := aimedDive(commands)
 	fmt.Println("Commands Aimed Product:", aimedProduct)
 }
 
@@ -66,11 +66,7 @@ func parseMagnitude(command string) (string, int) {
 	commandParts := strings.Fields(command)
 
 	direction := commandParts[0]
-
-	magnitude, err := strconv.Atoi(commandParts[1])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", commandParts[1])
-	}
+	magnitude, _ := strconv.Atoi(commandParts[1])
 
 	return direction, magnitude
 }
