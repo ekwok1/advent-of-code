@@ -2,10 +2,11 @@ package utilities
 
 import "strings"
 
-func CountTotal(slice *[]int) (total int) {
+func Sum(slice *[]int) (sum int) {
 	for _, position := range *slice {
-		total += position
+		sum += position
 	}
+
 	return
 }
 

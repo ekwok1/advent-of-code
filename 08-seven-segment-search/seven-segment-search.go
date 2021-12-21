@@ -82,10 +82,7 @@ func calculateTotalOutput(patternData *[]string) (total int) {
 			}
 		}
 
-		number, err := strconv.Atoi(stringifiedNumber)
-		if err != nil {
-			fmt.Println("Cannot parse int from string:", stringifiedNumber)
-		}
+		number, _ := strconv.Atoi(stringifiedNumber)
 		total += number
 	}
 
@@ -95,12 +92,14 @@ func calculateTotalOutput(patternData *[]string) (total int) {
 func countTrivialPatterns(patternData *[]string) (count int) {
 	for _, patternDataRow := range *patternData {
 		outputs := strings.Fields(strings.Split(patternDataRow, "|")[1])
+
 		for _, output := range outputs {
 			if isOne(output) || isFour(output) || isSeven(output) || isEight(output) {
 				count++
 			}
 		}
 	}
+
 	return
 }
 

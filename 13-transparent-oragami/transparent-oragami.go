@@ -17,18 +17,11 @@ func main() {
 	strCoordinates := transparentPaper[:foldInstructionsIndex]
 	instructions := transparentPaper[foldInstructionsIndex:]
 
-	// Part 1
 	uniqueCoordinates := foldAndGetUniqueCoordinates(&strCoordinates, &instructions, 1)
 	fmt.Println("Number of unique coordinates:", len(uniqueCoordinates))
 
-	// Part 2
 	uniqueCoordinatesPart2 := foldAndGetUniqueCoordinates(&strCoordinates, &instructions, len(instructions))
 	plot(uniqueCoordinatesPart2)
-}
-
-type Coordinates struct {
-	x int
-	y int
 }
 
 func plot(uniqueCoordinates map[Coordinates]bool) {
@@ -83,29 +76,16 @@ func foldAndGetUniqueCoordinates(strCoordinates *[]string, instructions *[]strin
 	return uniqueCoordinates
 }
 
-func getCoordinates(coordinates string) (int, int) {
-	xy := strings.Split(coordinates, ",")
-
-	x, err := strconv.Atoi(xy[0])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", xy[0])
-	}
-	y, err := strconv.Atoi(xy[1])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", xy[1])
-	}
-
-	return x, y
+func getCoordinates(coordinates string) (x, y int) {
+	fmt.Sscanf(coordinates, "%d,%d", &x, &y)
+	return
 }
 
 func getFoldingInstruction(instruction string) (axis string, coordinate int) {
 	foldAlong := strings.Fields(instruction)
 	foldAlongInstructions := strings.Split(foldAlong[2], "=")
 	axis = foldAlongInstructions[0]
-	coordinate, err := strconv.Atoi(foldAlongInstructions[1])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", foldAlongInstructions[1])
-	}
+	coordinate, _ = strconv.Atoi(foldAlongInstructions[1])
 
 	return
 }
@@ -125,4 +105,9 @@ func getGridSize(coordinatesMap *map[Coordinates]bool) (gridSize int) {
 	}
 
 	return
+}
+
+type Coordinates struct {
+	x int
+	y int
 }

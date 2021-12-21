@@ -14,12 +14,10 @@ func ScanIntsFromFile(filepath string) (*os.File, []int) {
 	var ints []int
 
 	for scanner.Scan() {
-		i, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			fmt.Println("Could not parse int from string:", scanner.Text())
-		}
+		var i int
+		fmt.Sscanf(scanner.Text(), "%d", &i)
 
-		ints = append(ints, int(i))
+		ints = append(ints, i)
 	}
 
 	return file, ints

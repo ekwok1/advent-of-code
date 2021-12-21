@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"strconv"
-	"strings"
 
 	"github.com/ekwok1/aoc-2021/utilities"
 )
@@ -33,6 +31,7 @@ func countIntersections(grid *[][]int) (intersections int) {
 			}
 		}
 	}
+
 	return
 }
 
@@ -91,7 +90,7 @@ func drawDiagonal(diagonal *[]string, grid *[][]int) {
 	}
 }
 
-func getGridSizeAndFilterLineTypes(coordinates *[]string) (gridSize int, horizontal []string, vertical []string, diagonal []string) {
+func getGridSizeAndFilterLineTypes(coordinates *[]string) (gridSize int, horizontal, vertical, diagonal []string) {
 	for _, coordinates := range *coordinates {
 		xStart, yStart, xEnd, yEnd := getCoordinates(coordinates)
 
@@ -114,32 +113,7 @@ func getGridSizeAndFilterLineTypes(coordinates *[]string) (gridSize int, horizon
 	return
 }
 
-// Input: 0,9 -> 5,9 (string)
-// Output: 0,9,5,9 (individual ints)
-func getCoordinates(coordinates string) (int, int, int, int) {
-	xyxy := strings.Fields(coordinates)
-	start := xyxy[0]
-	end := xyxy[2]
-
-	startFields := strings.Split(start, ",")
-	endFields := strings.Split(end, ",")
-
-	xStart, err := strconv.Atoi(startFields[0])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", startFields[0])
-	}
-	yStart, err := strconv.Atoi(startFields[1])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", startFields[1])
-	}
-	xEnd, err := strconv.Atoi(endFields[0])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", endFields[0])
-	}
-	yEnd, _ := strconv.Atoi(endFields[1])
-	if err != nil {
-		fmt.Println("Could not parse int from string:", endFields[1])
-	}
-
-	return xStart, yStart, xEnd, yEnd
+func getCoordinates(coordinates string) (xStart, yStart, xEnd, yEnd int) {
+	fmt.Sscanf(coordinates, "%d,%d -> %d,%d", &xStart, &yStart, &xEnd, &yEnd)
+	return
 }

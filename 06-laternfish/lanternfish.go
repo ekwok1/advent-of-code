@@ -13,9 +13,17 @@ func main() {
 
 	school := setupInitialState(initialTimes)
 	simulateDays(&school, 256)
-	total := utilities.CountTotal(&school)
+	sum := utilities.Sum(&school)
 
-	fmt.Println("Total Lanternfish:", total)
+	fmt.Println("Total Lanternfish:", sum)
+}
+
+func simulateDays(school *[]int, days int) {
+	for d := 0; d < days; d++ {
+		toReset := (*school)[0]
+		*school = append((*school)[1:], (*school)[:1]...)
+		(*school)[6] += toReset
+	}
 }
 
 func setupInitialState(initialTimes []int) (school []int) {
@@ -26,12 +34,4 @@ func setupInitialState(initialTimes []int) (school []int) {
 	}
 
 	return
-}
-
-func simulateDays(school *[]int, days int) {
-	for d := 0; d < days; d++ {
-		toReset := (*school)[0]
-		*school = append((*school)[1:], (*school)[:1]...)
-		(*school)[6] += toReset
-	}
 }
