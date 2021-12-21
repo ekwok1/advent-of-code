@@ -9,13 +9,12 @@ import (
 	"github.com/ekwok1/aoc-2021/utilities"
 )
 
-var hexadecimalMap = initializeHexadecimalMap()
-
 func main() {
 	file, hexadecimal := utilities.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
-	binary := convertHexdecimalToBinary(hexadecimal[0])
+	hexadecimalMap := initializeHexadecimalMap()
+	binary := convertHexdecimalToBinary(hexadecimal[0], &hexadecimalMap)
 
 	versionCounter := parsePacketVersions(binary, -1)
 	fmt.Println("Version counter:", versionCounter)
@@ -164,9 +163,9 @@ func parsePacketVersions(packet string, counter int) int {
 	}
 }
 
-func convertHexdecimalToBinary(hexadecimal string) (binary string) {
+func convertHexdecimalToBinary(hexadecimal string, hexadecimalMap *map[string]string) (binary string) {
 	for i := 0; i < len(hexadecimal); i++ {
-		binary += hexadecimalMap[string(hexadecimal[i])]
+		binary += (*hexadecimalMap)[string(hexadecimal[i])]
 	}
 
 	return
