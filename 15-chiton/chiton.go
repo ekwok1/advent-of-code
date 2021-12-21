@@ -16,14 +16,14 @@ func main() {
 
 	riskGrid := initialRiskGrid(&riskData)
 
-	minimumCost := getMinimumCost(&riskGrid)
-	fmt.Println("Minimum Cost:", minimumCost)
+	minimumTotalRisk := getMinimumTotalRisk(&riskGrid)
+	fmt.Println("Minimum Risk:", minimumTotalRisk)
 
-	minimumCostFullCave := getMinimumCostFullCave(&riskGrid)
-	fmt.Println("Minimum Cost Full Cave:", minimumCostFullCave)
+	minimumTotalRiskFullCave := getMinimumTotalRiskFullCave(&riskGrid)
+	fmt.Println("Minimum Risk Full Cave:", minimumTotalRiskFullCave)
 }
 
-func getMinimumCostFullCave(riskGrid *[][]int) int {
+func getMinimumTotalRiskFullCave(riskGrid *[][]int) int {
 	gridSize := len(*riskGrid)
 	fullSize := gridSize * 5
 	costGrid := utilities.CreateIntGrid(fullSize)
@@ -83,7 +83,7 @@ func getFullCaveCost(riskGrid *[][]int, row int, col int) int {
 	return (incrementedCost-1)%9 + 1
 }
 
-func getMinimumCost(riskGrid *[][]int) int {
+func getMinimumTotalRisk(riskGrid *[][]int) int {
 	gridSize := len(*riskGrid)
 	costGrid := utilities.CreateIntGrid(gridSize)
 
@@ -140,11 +140,7 @@ func initialRiskGrid(initialEnergyGrid *[]string) (grid [][]int) {
 
 		var intRow []int
 		for _, risk := range initialRiskRow {
-			risk, err := strconv.Atoi(risk)
-			if err != nil {
-				fmt.Println("Cannot parse int from string:", risk)
-			}
-
+			risk, _ := strconv.Atoi(risk)
 			intRow = append(intRow, risk)
 		}
 
@@ -160,8 +156,7 @@ type Location struct {
 }
 
 type Coordinates struct {
-	x int
-	y int
+	x, y int
 }
 
 type PriorityQueue []*Location
