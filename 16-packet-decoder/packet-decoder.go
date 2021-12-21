@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 
@@ -18,6 +19,106 @@ func main() {
 
 	versionCounter := parsePacketVersions(binary, -1)
 	fmt.Println("Version counter:", versionCounter)
+
+	value, _ := parseAndOperate(binary, 0)
+	fmt.Println("Value of operations:", value)
+}
+
+func parseAndOperate(packet string, index int) (int, int) {
+	typeId, _ := strconv.ParseInt(packet[index+3:index+6], 2, 64)
+
+	if typeId == 4 {
+		index += 6
+		value := 0
+
+		for {
+			number, _ := strconv.ParseInt(packet[index+1:index+5], 2, 64)
+			value = value*16 + int(number)
+			index += 5
+
+			if packet[index-5] == '0' {
+				return value, index
+			}
+		}
+	} else {
+		lengthTypeId := packet[index+6]
+		values := make([]int, 0)
+
+		if lengthTypeId == '0' {
+			bitLength, _ := strconv.ParseInt(packet[index+7:index+22], 2, 64)
+			startIndex := index + 22
+			index = startIndex
+
+			for {
+				value, nextIndex := parseAndOperate(packet, index)
+				values = append(values, value)
+				index = nextIndex
+				if nextIndex-startIndex == int(bitLength) {
+					break
+				}
+			}
+		} else {
+			numberOfPackets, _ := strconv.ParseInt(packet[index+7:index+18], 2, 64)
+			index += 18
+
+			for n := 0; n < int(numberOfPackets); n++ {
+				value, nextIndex := parseAndOperate(packet, index)
+				values = append(values, value)
+				index = nextIndex
+			}
+		}
+
+		switch typeId {
+		case 0:
+			sum := 0
+			for _, value := range values {
+				sum += value
+			}
+			return sum, index
+		case 1:
+			product := 1
+			for _, value := range values {
+				product *= value
+			}
+			return product, index
+		case 2:
+			min := math.MaxInt
+			for _, value := range values {
+				if value < min {
+					min = value
+				}
+			}
+			return min, index
+		case 3:
+			max := 0
+			for _, value := range values {
+				if value > max {
+					max = value
+				}
+			}
+			return max, index
+		case 5:
+			if values[0] > values[1] {
+				return 1, index
+			} else {
+				return 0, index
+			}
+		case 6:
+			if values[0] < values[1] {
+				return 1, index
+			} else {
+				return 0, index
+			}
+		case 7:
+			if values[0] == values[1] {
+				return 1, index
+			} else {
+				return 0, index
+			}
+		}
+	}
+
+	return 0, index
 }
 
 func parsePacketVersions(packet string, counter int) int {
