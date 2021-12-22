@@ -19,10 +19,10 @@ func CreateBoolGrid(row int, col int) (grid [][]bool) {
 	return
 }
 
-func CreateIntGrid(size int) (ret [][]int) {
+func CreateIntGrid(size int) (grid [][]int) {
 	for i := 0; i < size; i++ {
 		gridRow := make([]int, size)
-		ret = append(ret, gridRow)
+		grid = append(grid, gridRow)
 	}
 
 	return
