@@ -18,16 +18,22 @@ func main() {
 
 	greatestMagnitude := findGreatestMagnitude(&snailfishNumbers)
 	fmt.Println("Greatest magnitude:", greatestMagnitude)
-
 }
 
 func findGreatestMagnitude(snailfishNumbers *[]string) (maxMagnitude int) {
 	for i := 0; i < len(*snailfishNumbers); i++ {
 		for j := 1; j < len(*snailfishNumbers); j++ {
-			snailfishSum := add(newNode((*snailfishNumbers)[i], nil, 0), newNode((*snailfishNumbers)[j], nil, 0))
-			magnitude := snailfishSum.magnitude()
-			if magnitude > maxMagnitude {
-				maxMagnitude = magnitude
+			snailfishSum1 := add(newNode((*snailfishNumbers)[i], nil, 0), newNode((*snailfishNumbers)[j], nil, 0))
+			magnitude1 := snailfishSum1.magnitude()
+			snailfishSum2 := add(newNode((*snailfishNumbers)[j], nil, 0), newNode((*snailfishNumbers)[i], nil, 0))
+			magnitude2 := snailfishSum2.magnitude()
+
+			if magnitude1 > maxMagnitude {
+				maxMagnitude = magnitude1
+			}
+
+			if magnitude2 > maxMagnitude {
+				maxMagnitude = magnitude2
 			}
 		}
 	}
