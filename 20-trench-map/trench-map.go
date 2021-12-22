@@ -12,24 +12,12 @@ func main() {
 	file, allData := utilities.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
-	inputImage := allData[1:]
-	image := map[Coordinate]bool{}
-	for row := 0; row < len(inputImage); row++ {
-		for col := 0; col < len(inputImage[0]); col++ {
-			image[Coordinate{col, row}] = (inputImage[row][col] == '#')
-		}
-	}
-
-	minX, maxX, minY, maxY := getImageBounds(image)
-	minX, maxX, minY, maxY = addImageBuffer(image, minX, maxX, minY, maxY, false)
-
 	algorithm := allData[0]
+	inputImage := allData[1:]
+	image := initializeImage(&inputImage)
+
 	enhancements := 50
-	for i := 0; i < enhancements; i++ {
-		defaultValue := image[Coordinate{minX, maxY}]
-		minX, maxX, minY, maxY = addImageBuffer(image, minX, maxX, minY, maxY, defaultValue)
-		image = enhance(image, algorithm, defaultValue)
-	}
+	enhancer(enhancements, &algorithm, &image)
 
 	litPixels := countLitPixels(image)
 	fmt.Println("Lit pixels:", litPixels)
@@ -43,6 +31,17 @@ func countLitPixels(image Image) (count int) {
 	}
 
 	return
+}
+
+func enhancer(enhancements int, algorithm *string, image *Image) {
+	minX, maxX, minY, maxY := getImageBounds(*image)
+	minX, maxX, minY, maxY = addImageBuffer(*image, minX, maxX, minY, maxY, false)
+
+	for i := 0; i < enhancements; i++ {
+		defaultValue := (*image)[Coordinate{minX, maxY}]
+		minX, maxX, minY, maxY = addImageBuffer(*image, minX, maxX, minY, maxY, defaultValue)
+		(*image) = enhance(*image, *algorithm, defaultValue)
+	}
 }
 
 func enhance(image map[Coordinate]bool, algorithm string, defaultValue bool) Image {
@@ -118,6 +117,18 @@ func getImageBounds(image Image) (minX, maxX, minY, maxY int) {
 	}
 
 	return
+}
+
+func initializeImage(inputImage *[]string) Image {
+	image := make(Image)
+
+	for row := 0; row < len(*inputImage); row++ {
+		for col := 0; col < len((*inputImage)[0]); col++ {
+			image[Coordinate{col, row}] = ((*inputImage)[row][col] == '#')
+		}
+	}
+
+	return image
 }
 
 type Coordinate struct {
