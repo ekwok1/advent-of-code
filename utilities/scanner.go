@@ -4,29 +4,24 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 )
 
-func ScanIntsFromFile(filepath string) (*os.File, []int) {
+func ScanIntsFromFile(filepath string) (file *os.File, ints []int) {
 	file, scanner := getScanner(filepath)
-
-	var ints []int
 
 	for scanner.Scan() {
 		var i int
 		fmt.Sscanf(scanner.Text(), "%d", &i)
-
 		ints = append(ints, i)
 	}
 
-	return file, ints
+	return
 }
 
-func ScanIntsFromDelimitedString(filepath string, delimiter string) (*os.File, []int) {
+func ScanIntsFromDelimitedString(filepath string, delimiter string) (file *os.File, ints []int) {
 	file, scanner := getScanner(filepath)
 
-	var ints []int
 	var stringifiedInts []string
 
 	for scanner.Scan() {
@@ -35,21 +30,16 @@ func ScanIntsFromDelimitedString(filepath string, delimiter string) (*os.File, [
 	}
 
 	for _, stringifiedInt := range stringifiedInts {
-		i, err := strconv.Atoi(stringifiedInt)
-		if err != nil {
-			fmt.Println("Could not parse int from string:", stringifiedInt)
-		}
-
+		var i int
+		fmt.Sscanf(stringifiedInt, "%d", &i)
 		ints = append(ints, i)
 	}
 
-	return file, ints
+	return
 }
 
-func ScanStringsFromFile(filepath string) (*os.File, []string) {
+func ScanStringsFromFile(filepath string) (file *os.File, strings []string) {
 	file, scanner := getScanner(filepath)
-
-	var strings []string
 
 	for scanner.Scan() {
 		text := scanner.Text()
@@ -58,17 +48,14 @@ func ScanStringsFromFile(filepath string) (*os.File, []string) {
 		}
 	}
 
-	return file, strings
+	return
 }
 
-func getScanner(filepath string) (*os.File, *bufio.Scanner) {
-	file, err := os.Open(filepath)
-	if err != nil {
-		fmt.Println("Could not open file:", filepath)
-	}
+func getScanner(filepath string) (file *os.File, scanner *bufio.Scanner) {
+	file, _ = os.Open(filepath)
 
-	scanner := bufio.NewScanner(file)
+	scanner = bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 
-	return file, scanner
+	return
 }
