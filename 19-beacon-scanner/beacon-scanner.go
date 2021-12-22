@@ -14,24 +14,45 @@ func main() {
 	defer file.Close()
 
 	beacons := GetBeacons(&allData)
+	uniqueBeacons, scannerVectors := analyzeBeaconsAndScanners(beacons)
 
-	mappedBeacons := Beacon{}
-	for beacon := range beacons[0] {
-		mappedBeacons[beacon] = true
+	fmt.Println("Mapped beacons:", len(uniqueBeacons))
+
+	maxManhattanDistance := getMaxManhattanDistance(&scannerVectors)
+	fmt.Println("Max Manhattan Distance:", maxManhattanDistance)
+}
+
+func getMaxManhattanDistance(scannerVectors *[]Vector3d) (maxManhattanDistance int) {
+	for i := 0; i < len(*scannerVectors); i++ {
+		for j := 0; j < len(*scannerVectors); j++ {
+			manhattanDistance := (*scannerVectors)[i].ManhattanDistance((*scannerVectors)[j])
+			if manhattanDistance > maxManhattanDistance {
+				maxManhattanDistance = manhattanDistance
+			}
+		}
 	}
 
+	return
+}
+
+func analyzeBeaconsAndScanners(beacons []Beacons) (Beacons, []Vector3d) {
+	uniqueBeacons := Beacons{}
 	scannerVectors := []Vector3d{{0, 0, 0}}
+
+	for beacon := range beacons[0] {
+		uniqueBeacons[beacon] = true
+	}
 
 	beacons = beacons[1:]
 
 	for len(beacons) > 0 {
 	OuterLoop:
 		for i := len(beacons) - 1; i >= 0; i-- {
-			for orientation := 0; orientation < 24; orientation++ {
+			for orientationId := 0; orientationId < 24; orientationId++ {
 				diffs := make(map[Vector3d]int)
-				for knownBeacon := range mappedBeacons {
+				for uniqueBeacon := range uniqueBeacons {
 					for vector := range beacons[i] {
-						diff := vector.Rotate(orientation).Subtract(knownBeacon)
+						diff := vector.Rotate(orientationId).Subtract(uniqueBeacon)
 						diffs[diff]++
 					}
 				}
@@ -42,8 +63,8 @@ func main() {
 						scannerVectors = append(scannerVectors, scannerVector)
 
 						for vector := range beacons[i] {
-							beacon := vector.Rotate(orientation).Add(scannerVector)
-							mappedBeacons[beacon] = true
+							beacon := vector.Rotate(orientationId).Add(scannerVector)
+							uniqueBeacons[beacon] = true
 						}
 
 						beacons = append(beacons[:i], beacons[i+1:]...)
@@ -55,26 +76,14 @@ func main() {
 		}
 	}
 
-	fmt.Println("Mapped beacons:", len(mappedBeacons))
-
-	maxManhattanDistance := 0
-	for i := 0; i < len(scannerVectors); i++ {
-		for j := 0; j < len(scannerVectors); j++ {
-			manhattanDistance := scannerVectors[i].ManhattanDistance(scannerVectors[j])
-			if manhattanDistance > maxManhattanDistance {
-				maxManhattanDistance = manhattanDistance
-			}
-		}
-	}
-
-	fmt.Println("Max Manhattan Distance:", maxManhattanDistance)
+	return uniqueBeacons, scannerVectors
 }
 
-func GetBeacons(allData *[]string) (beacons []Beacon) {
-	var beacon Beacon
+func GetBeacons(allData *[]string) (beacons []Beacons) {
+	var beacon Beacons
 	for _, row := range *allData {
 		if strings.Contains(row, "scanner") {
-			beacon = Beacon{}
+			beacon = Beacons{}
 			beacons = append(beacons, beacon)
 			continue
 		}
@@ -87,7 +96,7 @@ func GetBeacons(allData *[]string) (beacons []Beacon) {
 	return
 }
 
-type Beacon map[Vector3d]bool
+type Beacons map[Vector3d]bool
 
 type Vector3d struct {
 	x, y, z int
