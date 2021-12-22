@@ -13,9 +13,9 @@ func main() {
 	defer file.Close()
 
 	increases := countIncreases(measurements)
-	slidingIncreases := countSlidingIncreases(measurements)
-
 	fmt.Println("Increases:", increases)
+
+	slidingIncreases := countSlidingIncreases(measurements)
 	fmt.Println("Sliding increases:", slidingIncreases)
 }
 

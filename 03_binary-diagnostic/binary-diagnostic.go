@@ -54,25 +54,15 @@ func calcPowerConsumption(binaries []string) int {
 		}
 	}
 
-	gamma, err := strconv.ParseInt(gammaBinary, 2, 64)
-	if err != nil {
-		fmt.Println("Cannot parse int from binary:", gammaBinary)
-	}
-
-	epsilon, err := strconv.ParseInt(epsilonBinary, 2, 64)
-	if err != nil {
-		fmt.Println("Cannot parse int from binary:", epsilonBinary)
-	}
+	gamma, _ := strconv.ParseInt(gammaBinary, 2, 64)
+	epsilon, _ := strconv.ParseInt(epsilonBinary, 2, 64)
 
 	return int(gamma * epsilon)
 }
 
 func getOxygenGeneratorRating(binaries []string, index int) int {
 	if len(binaries) == 1 {
-		oxygenGeneratorRating, err := strconv.ParseInt(binaries[0], 2, 64)
-		if err != nil {
-			fmt.Println("Cannot parse int from binary:", binaries[0])
-		}
+		oxygenGeneratorRating, _ := strconv.ParseInt(binaries[0], 2, 64)
 		return int(oxygenGeneratorRating)
 	}
 
@@ -85,10 +75,7 @@ func getOxygenGeneratorRating(binaries []string, index int) int {
 
 func getCarbonDioxideScrubberRating(binaries []string, index int) int {
 	if len(binaries) == 1 {
-		carbonDioxideScrubberRating, err := strconv.ParseInt(binaries[0], 2, 64)
-		if err != nil {
-			fmt.Println("Cannot parse int from binary:", binaries[0])
-		}
+		carbonDioxideScrubberRating, _ := strconv.ParseInt(binaries[0], 2, 64)
 		return int(carbonDioxideScrubberRating)
 	}
 
@@ -105,6 +92,7 @@ func getRelevantBinaries(binaries []string, index int, bit byte) (relevantBinari
 			relevantBinaries = append(relevantBinaries, binary)
 		}
 	}
+
 	return
 }
 

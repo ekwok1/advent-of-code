@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"strconv"
-	"strings"
 
 	"github.com/ekwok1/aoc-2021/utilities"
 )
@@ -15,7 +13,6 @@ func main() {
 	defer file.Close()
 
 	xMin, xMax, yMin, yMax := getCoordinateRange(targetArea[0])
-	fmt.Println("xMin:", xMin, "xMax:", xMax, "yMin:", yMin, "yMax:", yMax)
 
 	maxHeight := getMaxHeight(yMin)
 	fmt.Println("Max Height:", maxHeight)
@@ -92,27 +89,7 @@ func getMaxHeight(yMin int) (maxheight int) {
 	return
 }
 
-func getCoordinateRange(targetArea string) (int, int, int, int) {
-	coordinateRanges := strings.Split(targetArea, "target area: ")
-	xRange := strings.Split(strings.Split(strings.Split(coordinateRanges[1], ", ")[0], "x=")[1], "..")
-	yRange := strings.Split(strings.Split(strings.Split(coordinateRanges[1], ", ")[1], "y=")[1], "..")
-
-	xMin, err := strconv.Atoi(xRange[0])
-	if err != nil {
-		fmt.Println("Cannot parse int from string:", xRange[0])
-	}
-	xMax, err := strconv.Atoi(xRange[1])
-	if err != nil {
-		fmt.Println("Cannot parse int from string:", xRange[1])
-	}
-	yMin, err := strconv.Atoi(yRange[0])
-	if err != nil {
-		fmt.Println("Cannot parse int from string:", yRange[0])
-	}
-	yMax, err := strconv.Atoi(yRange[1])
-	if err != nil {
-		fmt.Println("Cannot parse int from string:", yRange[1])
-	}
-
-	return xMin, xMax, yMin, yMax
+func getCoordinateRange(targetArea string) (xMin, xMax, yMin, yMax int) {
+	fmt.Sscanf(targetArea, "target area: x=%d..%d, y=%d..%d", &xMin, &xMax, &yMin, &yMax)
+	return
 }

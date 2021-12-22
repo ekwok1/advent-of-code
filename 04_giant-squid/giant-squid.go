@@ -38,10 +38,7 @@ func main() {
 func getWinningBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (winningBoard BingoBoard, winningNumber int) {
 Loop:
 	for _, number := range *bingoNumbers {
-		bingoNumber, err := strconv.Atoi(number)
-		if err != nil {
-			fmt.Println("Cannot parse int from string:", bingoNumber)
-		}
+		bingoNumber, _ := strconv.Atoi(number)
 		markBingoBoards(bingoBoards, bingoNumber)
 
 		for _, bingoBoard := range *bingoBoards {
@@ -63,10 +60,7 @@ func getLastBoardAndNumber(bingoNumbers *[]string, bingoBoards *[]BingoBoard) (l
 
 Loop:
 	for _, bingoNumber := range *bingoNumbers {
-		bingoNumber, err := strconv.Atoi(bingoNumber)
-		if err != nil {
-			fmt.Println("Cannot parse int from string:", bingoNumber)
-		}
+		bingoNumber, _ := strconv.Atoi(bingoNumber)
 		markBingoBoards(bingoBoards, bingoNumber)
 
 		for i, bingoBoard := range *bingoBoards {
@@ -108,10 +102,7 @@ func createBingoBoards(allBingoRows *[]string, size int) (bingoBoards []BingoBoa
 
 		var bingoRow []BingoSpace
 		for _, space := range spaces {
-			value, err := strconv.Atoi(space)
-			if err != nil {
-				fmt.Println("Cannot parse int from string:", space)
-			}
+			value, _ := strconv.Atoi(space)
 			bingoRow = append(bingoRow, BingoSpace{value: value})
 		}
 
@@ -213,6 +204,7 @@ func calculateScore(bingoBoard *BingoBoard, winningNumber int) (score int) {
 			}
 		}
 	}
+
 	return score * winningNumber
 }
 
