@@ -5,8 +5,8 @@ import (
 	"math"
 	"os"
 
-	"github.com/ekwok1/aoc-2021/utilities"
 	"github.com/ekwok1/aoc-2021/utilities/scanner"
+	"github.com/ekwok1/aoc-2021/utilities/slice"
 )
 
 func main() {
@@ -81,7 +81,7 @@ func play(position1, position2, score1, score2 int, dicerolls *[]int, rolls int)
 	}
 
 	roll := (*dicerolls)[:3]
-	sum := utilities.Sum(&roll)
+	sum := slice.SumInts(&roll)
 	lands := land(position1, sum)
 	newScore := score1 + lands
 	newPosition := lands

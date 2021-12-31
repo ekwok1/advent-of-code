@@ -2,21 +2,25 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, data := scanner.ScanStringFromFile(os.Args[1])
+	file, data := scanner.ScanStringFromFile("./input.txt")
 	defer file.Close()
 
-	lisp := lisp{data}
+	lisp := Lisp{data}
 	fmt.Println("Floor:", lisp.GetFloor())
 	fmt.Println("Position:", lisp.GetPosition(-1))
 }
 
-func (lisp *lisp) GetFloor() int {
+// Lisp
+type Lisp struct {
+	str string
+}
+
+func (lisp *Lisp) GetFloor() int {
 	counts := make(map[rune]int)
 	for _, r := range lisp.str {
 		counts[r]++
@@ -25,7 +29,7 @@ func (lisp *lisp) GetFloor() int {
 	return counts['('] - counts[')']
 }
 
-func (lisp *lisp) GetPosition(floor int) int {
+func (lisp *Lisp) GetPosition(floor int) int {
 	counts := make(map[rune]int)
 	for i, r := range lisp.str {
 		counts[r]++
@@ -35,8 +39,4 @@ func (lisp *lisp) GetPosition(floor int) int {
 	}
 
 	panic(fmt.Sprintf("Never reached floor %d", floor))
-}
-
-type lisp struct {
-	str string
 }

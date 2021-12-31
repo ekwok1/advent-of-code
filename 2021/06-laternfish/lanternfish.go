@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ekwok1/aoc-2021/utilities"
 	"github.com/ekwok1/aoc-2021/utilities/scanner"
+	"github.com/ekwok1/aoc-2021/utilities/slice"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 
 	school := setupInitialState(initialTimes)
 	simulateDays(&school, 256)
-	sum := utilities.Sum(&school)
+	sum := slice.SumInts(&school)
 
 	fmt.Println("Total Lanternfish:", sum)
 }

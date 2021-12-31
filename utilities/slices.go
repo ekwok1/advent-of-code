@@ -2,14 +2,6 @@ package utilities
 
 import "strings"
 
-func Sum(slice *[]int) (sum int) {
-	for _, position := range *slice {
-		sum += position
-	}
-
-	return
-}
-
 func CreateBoolGrid(row int, col int) (grid [][]bool) {
 	for i := 0; i < row; i++ {
 		gridRow := make([]bool, col)
