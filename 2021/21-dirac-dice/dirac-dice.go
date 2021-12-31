@@ -6,10 +6,11 @@ import (
 	"os"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, positionData := utilities.ScanStringsFromFile(os.Args[1])
+	file, positionData := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	player1Position, player2Position := getStartingPositions(&positionData)

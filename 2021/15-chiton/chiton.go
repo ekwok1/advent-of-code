@@ -8,10 +8,11 @@ import (
 	"strings"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, riskData := utilities.ScanStringsFromFile(os.Args[1])
+	file, riskData := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	riskGrid := initialRiskGrid(&riskData)

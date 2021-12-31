@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalcPowerConsumption(t *testing.T) {
-	file, binaries := utilities.ScanStringsFromFile("test-input.txt")
+	file, binaries := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	powerConsumption := calcPowerConsumption(binaries)
@@ -17,7 +17,7 @@ func TestCalcPowerConsumption(t *testing.T) {
 }
 
 func TestGetOxygenGeneratorRating(t *testing.T) {
-	file, binaries := utilities.ScanStringsFromFile("test-input.txt")
+	file, binaries := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	oxygenGeneratorRating := getOxygenGeneratorRating(binaries, 0)
@@ -27,7 +27,7 @@ func TestGetOxygenGeneratorRating(t *testing.T) {
 }
 
 func TestGetCarbonDioxideScrubberRating(t *testing.T) {
-	file, binaries := utilities.ScanStringsFromFile("test-input.txt")
+	file, binaries := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	carbonDioxideScrubberRating := getCarbonDioxideScrubberRating(binaries, 0)

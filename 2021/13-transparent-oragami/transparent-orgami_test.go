@@ -4,10 +4,11 @@ import (
 	"testing"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestFoldAndGetUniqueCoordinatesOneFold(t *testing.T) {
-	file, transparentPaper := utilities.ScanStringsFromFile("test-input.txt")
+	file, transparentPaper := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	foldInstructionsIndex := utilities.IndexOf("fold", &transparentPaper)
@@ -21,7 +22,7 @@ func TestFoldAndGetUniqueCoordinatesOneFold(t *testing.T) {
 }
 
 func TestFoldAndGetUniqueCoordinatesTwoFold(t *testing.T) {
-	file, transparentPaper := utilities.ScanStringsFromFile("test-input.txt")
+	file, transparentPaper := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	foldInstructionsIndex := utilities.IndexOf("fold", &transparentPaper)

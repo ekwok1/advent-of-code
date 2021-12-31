@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountLitPixels_2Enhacements(t *testing.T) {
-	file, allData := utilities.ScanStringsFromFile("test-input.txt")
+	file, allData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	algorithm := allData[0]
@@ -24,7 +24,7 @@ func TestCountLitPixels_2Enhacements(t *testing.T) {
 }
 
 func TestCountLitPixels_50Enhacements(t *testing.T) {
-	file, allData := utilities.ScanStringsFromFile("test-input.txt")
+	file, allData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	algorithm := allData[0]

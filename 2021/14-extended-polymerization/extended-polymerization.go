@@ -6,11 +6,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, polymerData := utilities.ScanStringsFromFile(os.Args[1])
+	file, polymerData := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	polymerInsertionRuleList := polymerData[1:]

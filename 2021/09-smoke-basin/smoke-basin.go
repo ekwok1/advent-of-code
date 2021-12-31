@@ -7,11 +7,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, heightData := utilities.ScanStringsFromFile(os.Args[1])
+	file, heightData := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	heightmap := initializeHeightmap(&heightData)

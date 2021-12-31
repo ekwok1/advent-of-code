@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestGetMinimumTotalRisk(t *testing.T) {
-	file, riskData := utilities.ScanStringsFromFile("test-input.txt")
+	file, riskData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	riskGrid := initialRiskGrid(&riskData)
@@ -19,7 +19,7 @@ func TestGetMinimumTotalRisk(t *testing.T) {
 }
 
 func TestGetMinimumTotalRiskFullCave(t *testing.T) {
-	file, riskData := utilities.ScanStringsFromFile("test-input.txt")
+	file, riskData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	riskGrid := initialRiskGrid(&riskData)

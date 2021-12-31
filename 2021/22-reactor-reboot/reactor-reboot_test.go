@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountOn(t *testing.T) {
-	file, rebootInstructions := utilities.ScanStringsFromFile("test-input-1.txt")
+	file, rebootInstructions := scanner.ScanStringsFromFile("test-input-1.txt")
 	defer file.Close()
 
 	reactor := make(Reactor)
@@ -19,7 +19,7 @@ func TestCountOn(t *testing.T) {
 }
 
 func TestCountAllOn(t *testing.T) {
-	file, rebootInstructions := utilities.ScanStringsFromFile("test-input-2.txt")
+	file, rebootInstructions := scanner.ScanStringsFromFile("test-input-2.txt")
 	defer file.Close()
 
 	prisms := make([]Prism, 0)

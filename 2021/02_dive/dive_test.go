@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestDive(t *testing.T) {
-	file, commands := utilities.ScanStringsFromFile("test-input.txt")
+	file, commands := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	product := dive(commands)
@@ -17,7 +17,7 @@ func TestDive(t *testing.T) {
 }
 
 func TestAimedDive(t *testing.T) {
-	file, commands := utilities.ScanStringsFromFile("test-input.txt")
+	file, commands := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	product := aimedDive(commands)

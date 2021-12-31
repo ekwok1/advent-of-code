@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 // OPTOMIZATIONS
@@ -16,7 +16,7 @@ import (
 // Is it possible to create a boardmap from square value to position to reduce looping for finds?
 
 func main() {
-	file, bingoInfo := utilities.ScanStringsFromFile(os.Args[1])
+	file, bingoInfo := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	// Setting Up

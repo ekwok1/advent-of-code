@@ -4,10 +4,11 @@ import (
 	"testing"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountIntersectionsStraightLinesOnly(t *testing.T) {
-	file, coordinates := utilities.ScanStringsFromFile("test-input.txt")
+	file, coordinates := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	gridSize, horizontal, vertical, _ := getGridSizeAndFilterLineTypes(&coordinates)
@@ -24,7 +25,7 @@ func TestCountIntersectionsStraightLinesOnly(t *testing.T) {
 }
 
 func TestCountIntersections(t *testing.T) {
-	file, coordinates := utilities.ScanStringsFromFile("test-input.txt")
+	file, coordinates := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	gridSize, horizontal, vertical, diagonal := getGridSizeAndFilterLineTypes(&coordinates)

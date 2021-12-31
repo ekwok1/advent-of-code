@@ -6,11 +6,11 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, hexadecimal := utilities.ScanStringsFromFile(os.Args[1])
+	file, hexadecimal := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	hexadecimalMap := initializeHexadecimalMap()

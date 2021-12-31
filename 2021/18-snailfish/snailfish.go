@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, snailfishNumbers := utilities.ScanStringsFromFile(os.Args[1])
+	file, snailfishNumbers := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	magnitude := calculateMagnitude(snailfishNumbers)

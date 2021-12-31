@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalculateSyntaxErrorScore(t *testing.T) {
-	file, chunks := utilities.ScanStringsFromFile("test-input.txt")
+	file, chunks := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	syntaxMap := initializeSyntaxMap()
@@ -20,7 +20,7 @@ func TestCalculateSyntaxErrorScore(t *testing.T) {
 }
 
 func TestCalculateCompletionScore(t *testing.T) {
-	file, chunks := utilities.ScanStringsFromFile("test-input.txt")
+	file, chunks := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	syntaxMap := initializeSyntaxMap()

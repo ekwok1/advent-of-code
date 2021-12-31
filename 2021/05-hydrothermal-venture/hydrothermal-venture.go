@@ -6,10 +6,11 @@ import (
 	"os"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, coordinates := utilities.ScanStringsFromFile(os.Args[1])
+	file, coordinates := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	gridSize, horizontal, vertical, diagonal := getGridSizeAndFilterLineTypes(&coordinates)

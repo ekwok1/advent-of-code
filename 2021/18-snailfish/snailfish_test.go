@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalculateMagnitude(t *testing.T) {
-	file, snailfishNumbers := utilities.ScanStringsFromFile("test-input.txt")
+	file, snailfishNumbers := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	magnitude := calculateMagnitude(snailfishNumbers)
@@ -17,7 +17,7 @@ func TestCalculateMagnitude(t *testing.T) {
 }
 
 func TestFindGreatestMagnitude(t *testing.T) {
-	file, snailfishNumbers := utilities.ScanStringsFromFile("test-input.txt")
+	file, snailfishNumbers := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	greatestMagnitude := findGreatestMagnitude(&snailfishNumbers)

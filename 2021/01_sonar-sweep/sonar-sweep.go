@@ -5,11 +5,11 @@ import (
 	"math"
 	"os"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, measurements := utilities.ScanIntsFromFile(os.Args[1])
+	file, measurements := scanner.ScanIntsFromFile(os.Args[1])
 	defer file.Close()
 
 	increases := countIncreases(measurements)

@@ -5,11 +5,11 @@ import (
 	"math"
 	"os"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, positions := utilities.ScanIntsFromDelimitedString(os.Args[1], ",")
+	file, positions := scanner.ScanIntsFromDelimitedString(os.Args[1], ",")
 	defer file.Close()
 
 	min, max := getPositionRange(&positions)

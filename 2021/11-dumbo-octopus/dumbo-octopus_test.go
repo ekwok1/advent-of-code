@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestSimulate10Days(t *testing.T) {
-	file, initialEnergyGrid := utilities.ScanStringsFromFile("test-input.txt")
+	file, initialEnergyGrid := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	octopusGrid := initialOctopusEnergyGrid(&initialEnergyGrid)
@@ -18,7 +18,7 @@ func TestSimulate10Days(t *testing.T) {
 }
 
 func TestSimulate100Days(t *testing.T) {
-	file, initialEnergyGrid := utilities.ScanStringsFromFile("test-input.txt")
+	file, initialEnergyGrid := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	octopusGrid := initialOctopusEnergyGrid(&initialEnergyGrid)

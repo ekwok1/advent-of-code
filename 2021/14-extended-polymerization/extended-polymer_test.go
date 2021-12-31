@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalculateGreatestDiff10Steps(t *testing.T) {
-	file, polymerData := utilities.ScanStringsFromFile("test-input.txt")
+	file, polymerData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	polymerInsertionRuleList := polymerData[1:]
@@ -26,7 +26,7 @@ func TestCalculateGreatestDiff10Steps(t *testing.T) {
 }
 
 func TestCalculateGreatestDiff40Steps(t *testing.T) {
-	file, polymerData := utilities.ScanStringsFromFile("test-input.txt")
+	file, polymerData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	polymerInsertionRuleList := polymerData[1:]

@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountCavePathsNoReturnTestInput1(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-1.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-1.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)
@@ -22,7 +22,7 @@ func TestCountCavePathsNoReturnTestInput1(t *testing.T) {
 }
 
 func TestCountCavePathsNoReturnTestInput2(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-2.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-2.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)
@@ -37,7 +37,7 @@ func TestCountCavePathsNoReturnTestInput2(t *testing.T) {
 }
 
 func TestCountCavePathsNoReturnTestInput3(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-3.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-3.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)
@@ -52,7 +52,7 @@ func TestCountCavePathsNoReturnTestInput3(t *testing.T) {
 }
 
 func TestCountCavePathsOneReturnTestInput1(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-1.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-1.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)
@@ -67,7 +67,7 @@ func TestCountCavePathsOneReturnTestInput1(t *testing.T) {
 }
 
 func TestCountCavePathsOneReturnTestInput2(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-2.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-2.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)
@@ -82,7 +82,7 @@ func TestCountCavePathsOneReturnTestInput2(t *testing.T) {
 }
 
 func TestCountCavePathsOneReturnTestInput3(t *testing.T) {
-	file, connections := utilities.ScanStringsFromFile("test-input-3.txt")
+	file, connections := scanner.ScanStringsFromFile("test-input-3.txt")
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)

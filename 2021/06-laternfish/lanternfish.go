@@ -5,10 +5,11 @@ import (
 	"os"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, initialTimes := utilities.ScanIntsFromDelimitedString(os.Args[1], ",")
+	file, initialTimes := scanner.ScanIntsFromDelimitedString(os.Args[1], ",")
 	defer file.Close()
 
 	school := setupInitialState(initialTimes)

@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, patternData := utilities.ScanStringsFromFile(os.Args[1])
+	file, patternData := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	count := countTrivialPatterns(&patternData)

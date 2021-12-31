@@ -4,11 +4,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalculateScoreOfWinningBoardAndNumber(t *testing.T) {
-	file, bingoInfo := utilities.ScanStringsFromFile("test-input.txt")
+	file, bingoInfo := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	allBingoBoardInfo := bingoInfo[1:]
@@ -25,7 +25,7 @@ func TestCalculateScoreOfWinningBoardAndNumber(t *testing.T) {
 }
 
 func TestCalculateScoreOfLastBoardAndNumber(t *testing.T) {
-	file, bingoInfo := utilities.ScanStringsFromFile("test-input.txt")
+	file, bingoInfo := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	allBingoBoardInfo := bingoInfo[1:]

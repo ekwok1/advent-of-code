@@ -6,11 +6,11 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func main() {
-	file, connections := utilities.ScanStringsFromFile(os.Args[1])
+	file, connections := scanner.ScanStringsFromFile(os.Args[1])
 	defer file.Close()
 
 	caveSystem := initializeCaveSystem(&connections)

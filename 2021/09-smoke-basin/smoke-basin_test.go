@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalculateLowPointRisk(t *testing.T) {
-	file, heightData := utilities.ScanStringsFromFile("test-input.txt")
+	file, heightData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	heightmap := initializeHeightmap(&heightData)
@@ -20,7 +20,7 @@ func TestCalculateLowPointRisk(t *testing.T) {
 }
 
 func TestLargestBasinProduct(t *testing.T) {
-	file, heightData := utilities.ScanStringsFromFile("test-input.txt")
+	file, heightData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	heightmap := initializeHeightmap(&heightData)

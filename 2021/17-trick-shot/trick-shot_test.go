@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestGetMaxHeight(t *testing.T) {
-	file, targetArea := utilities.ScanStringsFromFile("test-input.txt")
+	file, targetArea := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	_, _, yMin, _ := getCoordinateRange(targetArea[0])
@@ -18,7 +18,7 @@ func TestGetMaxHeight(t *testing.T) {
 }
 
 func TestCountHits(t *testing.T) {
-	file, targetArea := utilities.ScanStringsFromFile("test-input.txt")
+	file, targetArea := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	xMin, xMax, yMin, yMax := getCoordinateRange(targetArea[0])

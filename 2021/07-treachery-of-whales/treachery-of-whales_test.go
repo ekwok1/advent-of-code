@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCalcMinimumBasicFuel(t *testing.T) {
-	file, positions := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
+	file, positions := scanner.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
 	min, max := getPositionRange(&positions)
@@ -19,7 +19,7 @@ func TestCalcMinimumBasicFuel(t *testing.T) {
 }
 
 func TestCalcMininmumExpensiveFuel(t *testing.T) {
-	file, positions := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
+	file, positions := scanner.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
 	min, max := getPositionRange(&positions)

@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountIncreases(t *testing.T) {
-	file, measurements := utilities.ScanIntsFromFile("test-input.txt")
+	file, measurements := scanner.ScanIntsFromFile("test-input.txt")
 	defer file.Close()
 
 	increases := countIncreases(measurements)
@@ -17,7 +17,7 @@ func TestCountIncreases(t *testing.T) {
 }
 
 func TestCountSlidingIncreases(t *testing.T) {
-	file, measurements := utilities.ScanIntsFromFile("test-input.txt")
+	file, measurements := scanner.ScanIntsFromFile("test-input.txt")
 	defer file.Close()
 
 	increases := countSlidingIncreases(measurements)

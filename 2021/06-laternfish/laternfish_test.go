@@ -4,10 +4,11 @@ import (
 	"testing"
 
 	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestSimulate18Days(t *testing.T) {
-	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
+	file, initialTimes := scanner.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
 	school := setupInitialState(initialTimes)
@@ -20,7 +21,7 @@ func TestSimulate18Days(t *testing.T) {
 }
 
 func TestSimulate80Days(t *testing.T) {
-	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
+	file, initialTimes := scanner.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
 	school := setupInitialState(initialTimes)
@@ -33,7 +34,7 @@ func TestSimulate80Days(t *testing.T) {
 }
 
 func TestSimulate256Days(t *testing.T) {
-	file, initialTimes := utilities.ScanIntsFromDelimitedString("test-input.txt", ",")
+	file, initialTimes := scanner.ScanIntsFromDelimitedString("test-input.txt", ",")
 	defer file.Close()
 
 	school := setupInitialState(initialTimes)

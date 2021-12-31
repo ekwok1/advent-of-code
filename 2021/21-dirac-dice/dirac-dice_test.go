@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestProductLowestScoreTotalRolls(t *testing.T) {
-	file, positionData := utilities.ScanStringsFromFile("test-input.txt")
+	file, positionData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	player1Position, player2Position := getStartingPositions(&positionData)
@@ -21,7 +21,7 @@ func TestProductLowestScoreTotalRolls(t *testing.T) {
 }
 
 func TestGetMostWins(t *testing.T) {
-	file, positionData := utilities.ScanStringsFromFile("test-input.txt")
+	file, positionData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	player1Position, player2Position := getStartingPositions(&positionData)

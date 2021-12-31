@@ -3,11 +3,11 @@ package main
 import (
 	"testing"
 
-	"github.com/ekwok1/aoc-2021/utilities"
+	"github.com/ekwok1/aoc-2021/utilities/scanner"
 )
 
 func TestCountTrivialPatterns(t *testing.T) {
-	file, patternData := utilities.ScanStringsFromFile("test-input.txt")
+	file, patternData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	count := countTrivialPatterns(&patternData)
@@ -17,7 +17,7 @@ func TestCountTrivialPatterns(t *testing.T) {
 }
 
 func TestCalculateTotalOutput(t *testing.T) {
-	file, patternData := utilities.ScanStringsFromFile("test-input.txt")
+	file, patternData := scanner.ScanStringsFromFile("test-input.txt")
 	defer file.Close()
 
 	total := calculateTotalOutput(&patternData)
