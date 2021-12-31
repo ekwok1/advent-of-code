@@ -34,7 +34,7 @@ func (lisp *lisp) GetPosition(floor int) int {
 		}
 	}
 
-	return -1
+	panic(fmt.Sprintf("Never reached floor %d", floor))
 }
 
 type lisp struct {
