@@ -1,4 +1,4 @@
-package utilities
+package scanner
 
 import (
 	"bufio"
@@ -33,6 +33,19 @@ func ScanIntsFromDelimitedString(filepath string, delimiter string) (file *os.Fi
 		var i int
 		fmt.Sscanf(stringifiedInt, "%d", &i)
 		ints = append(ints, i)
+	}
+
+	return
+}
+
+func ScanStringFromFile(filepath string) (file *os.File, str string) {
+	file, scanner := getScanner(filepath)
+
+	for scanner.Scan() {
+		text := scanner.Text()
+		if text != "" {
+			str = text
+		}
 	}
 
 	return
