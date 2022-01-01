@@ -6,6 +6,16 @@ import (
 	"sort"
 )
 
+func Contains(slice *[]interface{}, item interface{}) bool {
+	for _, element := range *slice {
+		if element == item {
+			return true
+		}
+	}
+
+	return false
+}
+
 func MinInt(slice *[]int) int {
 	min := math.MaxInt
 

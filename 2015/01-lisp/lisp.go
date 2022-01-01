@@ -7,31 +7,25 @@ import (
 )
 
 func main() {
-	file, data := scanner.ScanStringFromFile("./input.txt")
+	file, lisp := scanner.ScanStringFromFile("./input.txt")
 	defer file.Close()
 
-	lisp := Lisp{data}
-	fmt.Println("Floor:", lisp.GetFloor())
-	fmt.Println("Position:", lisp.GetPosition(-1))
+	fmt.Println("Floor:", GetFloor(&lisp))
+	fmt.Println("Position:", GetPosition(&lisp, -1))
 }
 
-// Lisp
-type Lisp struct {
-	str string
-}
-
-func (lisp *Lisp) GetFloor() int {
+func GetFloor(lisp *string) int {
 	counts := make(map[rune]int)
-	for _, r := range lisp.str {
+	for _, r := range *lisp {
 		counts[r]++
 	}
 
 	return counts['('] - counts[')']
 }
 
-func (lisp *Lisp) GetPosition(floor int) int {
+func GetPosition(lisp *string, floor int) int {
 	counts := make(map[rune]int)
-	for i, r := range lisp.str {
+	for i, r := range *lisp {
 		counts[r]++
 		if counts['(']-counts[')'] == floor {
 			return i + 1
