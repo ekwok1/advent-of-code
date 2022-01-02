@@ -6,9 +6,9 @@ import (
 	"sort"
 )
 
-func Contains(slice *[]interface{}, item interface{}) bool {
-	for _, element := range *slice {
-		if element == item {
+func Contains(slice *[]interface{}, value interface{}) bool {
+	for _, item := range *slice {
+		if item == value {
 			return true
 		}
 	}
@@ -29,15 +29,16 @@ func MinInt(slice *[]int) int {
 }
 
 func MinInts(slice *[]int, howMany int) (ints []int) {
-	if len(*slice) < howMany {
-		panic(fmt.Sprintf("You cannot return %d min ints from slice of length %d", howMany, len(*slice)))
+	sliceRef := *slice
+	if len(sliceRef) < howMany {
+		panic(fmt.Sprintf("You cannot return %d min ints from slice of length %d", howMany, len(sliceRef)))
 	}
 
-	sort.Ints(*slice)
+	sort.Ints(sliceRef)
 
 	for len(ints) < howMany {
-		min := (*slice)[0]
-		(*slice) = (*slice)[1:]
+		min := sliceRef[0]
+		sliceRef = sliceRef[1:]
 		ints = append(ints, min)
 	}
 
